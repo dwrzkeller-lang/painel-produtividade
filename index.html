@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B0F18" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Painel de Produtividade" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>PAINEL DE PRODUTIVIDADE - MULTIPROJETOS</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/img/marca-simbolo.svg">
+  <script src="./assets/vendor/chart.umd.min.js"></script>
+  <script src="./assets/vendor/html2canvas.min.js"></script>
+  <script src="./assets/vendor/jszip.min.js"></script>
+  <script src="./firebase-config.js"></script>
+  <script src="./assets/js/00-modo-demonstracao.js"></script>
+  <link rel="stylesheet" href="./assets/css/base/01-core.css">
+  <link rel="stylesheet" href="./assets/css/base/02-calendario.css">
+  <link rel="stylesheet" href="./assets/css/base/03-card-equipe.css">
+  <link rel="stylesheet" href="./assets/css/base/04-card-21-equipes.css">
+  <link rel="stylesheet" href="./assets/css/base/05-cards-equipes.css">
+  <link rel="stylesheet" href="./assets/css/base/06-login.css">
+  <link rel="stylesheet" href="./assets/css/base/07-executivo.css">
+  <link rel="stylesheet" href="./assets/css/base/08-ajustes-28-06.css">
+  <link rel="stylesheet" href="./assets/css/base/09-patch-28-06.css">
+  <link rel="stylesheet" href="./assets/css/base/10-ajuste-final.css">
+  <link rel="stylesheet" href="./assets/css/base/11-ajustes-extra-28-06.css">
+  <link rel="stylesheet" href="./assets/css/base/12-patch-29-06.css">
+  <link rel="stylesheet" href="./assets/css/base/13-patch-final-29-06.css">
+
+  <link rel="stylesheet" href="./assets/css/02-mobile-adapt.css">
+
+  <link rel="stylesheet" href="./assets/css/03-final-fix.css">
+
+  <link rel="stylesheet" href="./assets/css/04-capture-card-all-teams.css">
+
+  <link rel="stylesheet" href="./assets/css/05-picker-responsive.css">
+  <link rel="stylesheet" href="./assets/css/06-final-polish-29-06.css">
+  <link rel="stylesheet" href="./assets/css/07-main-contracts-wip-json.css">
+  <link rel="stylesheet" href="./assets/css/08-editor-csv-historico.css">
+  <link rel="stylesheet" href="./assets/css/09-ajuste-csv-data-desempenho.css">
+  <link rel="stylesheet" href="./assets/css/10-login-marca.css">
+  
+  <link rel="stylesheet" href="./assets/css/11-mobile-e-zoom.css">
+  <link rel="stylesheet" href="./assets/css/12-comentario-equipe.css">
+  
+  <link rel="stylesheet" href="./assets/css/13-transicoes.css">
+  <link rel="stylesheet" href="./assets/css/14-admin.css">
+  <link rel="stylesheet" href="./assets/css/20-identidade.css">
+  <link rel="stylesheet" href="./assets/css/21-cards-equipe.css">
+  <link rel="stylesheet" href="./assets/gerencial/gerencial.css">
+
+</head>
+
+<body class="app-locked auth-loading">
+
+  <div id="authSplash" class="pa-capa" role="status" aria-live="polite">
+    <div class="pa-fundo" aria-hidden="true"></div><div class="pa-veu" aria-hidden="true"></div>
+    <div class="pa-capa-centro">
+      <div class="pa-capa-marca"><svg class="pa-simbolo" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="17" width="5" height="9" fill="#FFFFFF"/><rect x="13.5" y="12" width="5" height="14" fill="#FFFFFF"/><rect x="22" y="6" width="5" height="20" fill="#E8590C"/><rect x="3" y="27.5" width="26" height="1.5" fill="#FFFFFF"/></svg><span>Painel de Produtividade</span></div>
+      <div class="pa-capa-ola" data-pa-titulo><small data-pa-sub></small></div>
+      <div class="pa-capa-barra" aria-hidden="true"><i></i></div>
+      <div class="pa-capa-passo">conferindo o acesso</div>
+    </div>
+  </div>
+
+  <div id="execLoadingOverlay" class="pa-capa" role="status" aria-live="polite" style="display:none">
+    <div class="pa-fundo" aria-hidden="true"></div><div class="pa-veu" aria-hidden="true"></div>
+    <div class="pa-capa-centro">
+      <div class="pa-capa-marca"><svg class="pa-simbolo" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="17" width="5" height="9" fill="#FFFFFF"/><rect x="13.5" y="12" width="5" height="14" fill="#FFFFFF"/><rect x="22" y="6" width="5" height="20" fill="#E8590C"/><rect x="3" y="27.5" width="26" height="1.5" fill="#FFFFFF"/></svg><span>Painel de Produtividade</span></div>
+      <div class="pa-capa-ola" data-pa-titulo>Carregando<small data-pa-sub></small></div>
+      <div class="pa-capa-barra" aria-hidden="true"><i></i></div>
+      <div class="pa-capa-passo" id="execLoadingMsg">conferindo o acesso</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      try {
+        var temSessao = false;
+        try {
+          if (localStorage.getItem('pp_session_ts')) temSessao = true;
+          if (!temSessao) {
+            for (var i = 0; i < localStorage.length; i++) {
+              var k = localStorage.key(i);
+              if (k && k.indexOf('firebase:authUser:') === 0) { temSessao = true; break; }
+            }
+          }
+        } catch (e) { temSessao = false; }
+        if (!temSessao) {
+          var s = document.getElementById('authSplash');
+          if (s) s.style.display = 'none';
+          document.body.classList.remove('auth-loading');
+        }
+      } catch (e) { }
+    })();
+  </script>
+
+  <div id="loginScreen" class="login-screen pa-entrada">
+    <div class="pa-fundo" aria-hidden="true"></div><div class="pa-veu" aria-hidden="true"></div>
+    <section class="pa-cartao" aria-labelledby="paTitulo">
+      <div class="pa-marca"><svg class="pa-simbolo" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="17" width="5" height="9" fill="#161B24"/><rect x="13.5" y="12" width="5" height="14" fill="#161B24"/><rect x="22" y="6" width="5" height="20" fill="#E8590C"/><rect x="3" y="27.5" width="26" height="1.5" fill="#161B24"/></svg><span>Painel de Produtividade</span></div>
+      <h1 class="pa-titulo" id="paTitulo">Entrar</h1>
+      <form class="pa-form" onsubmit="return loginApp(event)" novalidate>
+        <div class="pa-campo"><label for="loginUser">E-mail</label><input id="loginUser" type="email" autocomplete="email" placeholder="seu@empresa.com.br" required></div>
+        <div class="pa-campo"><label for="loginPass">Senha</label>
+          <div class="pa-senha"><input id="loginPass" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+            <button type="button" class="pa-senha-ver" onclick="ppAlternarSenha(this)" aria-label="Mostrar a senha" title="Mostrar a senha"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+        </div>
+        <button class="pa-entrar" type="submit" id="loginSubmitBtn">Entrar</button>
+        <div class="pa-erro" id="loginError" role="alert"></div>
+      </form>
+      <div class="pa-restrito"><button type="button" class="pa-esqueci" id="paEsqueci" onclick="ppEsqueciSenha()">Esqueci minha senha</button></div>
+    </section>
+    <p class="pa-rodape">© 2026 Painel de Produtividade</p>
+  </div>
+  <div class="current-project-pill" id="currentProjectPill">Projeto: --</div>
+
+  <div id="execMenuPanel" style="display:none;">
+    <div class="pp-menu-section">Navegação</div>
+    <button class="pp-menu-item menu-accent" onclick="voltarAoPicker(); closeExecMenu();">Início</button>
+    <div class="pp-menu-section">Ações</div>
+    <button class="pp-menu-item" onclick="reloadExecutivePanel(); closeExecMenu();">Atualizar</button>
+  </div>
+
+  <div id="executivePortal" class="executive-portal">
+    <div class="exec-shell-bar">
+      <div class="exec-shell-left">
+        <button class="pp-menu-btn" onclick="toggleExecMenu(event)" title="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="exec-shell-title">Acompanhamento Gerencial · Atualização automática</div>
+      </div>
+      <button class="btn btn-white" style="font-size:11px;padding:6px 10px;flex-shrink:0;"
+        onclick="logoutApp()">Sair</button>
+    </div>
+    <div id="gerencialApp" class="ger-app" aria-label="Acompanhamento gerencial"></div>
+  </div>
+
+  <div id="dashboard" class="dashboard">
+    <header class="titlebar">
+      <div class="titlebar-left">
+        <button class="pp-menu-btn" id="ppMenuBtn" onclick="togglePpMenu(event)" title="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="logo-marca"><span class="ap">Painel</span><span class="plus">de Produtividade</span></div>
+      </div>
+      <span class="title-text" id="mainTitle">PAINEL DE PRODUTIVIDADE - EDITÁVEL</span>
+      <div class="title-date" id="mainDate">--</div>
+      <button class="btn btn-back" onclick="voltarAoPicker()">Voltar</button>
+    </header>
+
+    <section id="kpiGrid" class="kpis"></section>
+
+    <section class="main">
+      <section class="panel">
+        <div class="panel-head"><span>Desempenho por equipe</span>
+          
+          <input type="search" id="buscaEquipe" class="pp-busca-equipe" placeholder="Pesquisar equipe..."
+            autocomplete="off" oninput="ppBuscarEquipe(this.value)">
+          <small id="countMain">21 equipes</small>
+        </div>
+        <div class="panel-body">
+          <div class="table-wrap">
+            <table class="table" id="mainTable"></table>
+          </div>
+        </div>
+      </section>
+
+      <section class="right">
+        <section class="panel">
+          <div class="panel-head"><span>Ranking por desvio acumulado</span><small>Da pior para a melhor</small>
+          </div>
+          <div class="panel-body">
+            
+            <div class="rank-legend"><span><i class="legend-dot" style="background:#D0402B"></i>Abaixo da
+                meta</span><span><i class="legend-dot" style="background:var(--green)"></i>Acima da meta</span></div>
+            <div class="chart-box with-legend"><canvas id="chartRanking"></canvas></div>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><span>Distribuição de status</span><small id="statusTotal">0 equipes</small></div>
+          <div class="panel-body">
+            <div class="status-box">
+              <div class="chart-box"><canvas id="chartStatus"></canvas></div>
+              <div class="status-list">
+                <div class="status-line"><span><i class="dot" style="background:var(--green)"></i>EXCELENTE</span><b
+                    id="statusOk">0 equipe(s)</b></div>
+                <div class="status-line"><span><i class="dot" style="background:var(--orange2)"></i>ATENÇÃO</span><b
+                    id="statusAtt">0 equipe(s)</b></div>
+                <div class="status-line"><span><i class="dot" style="background:var(--red)"></i>ALERTA</span><b
+                    id="statusAlr">0 equipe(s)</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
+
+    <section class="bottom">
+      <section class="panel">
+        <div class="panel-head"><span>Produção dia · total geral</span><small>R$ mil</small></div>
+        <div class="panel-body">
+          <div class="chart-box"><canvas id="chartHistorico"></canvas></div>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><span>Produzido dia por equipe</span><small id="dataEquipe"></small></div>
+        <div class="panel-body">
+          <div class="chart-box"><canvas id="chartEquipeDia"></canvas></div>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><span>Desempenho geral</span><small>Acumulado</small></div>
+        <div class="panel-body">
+          <div class="chart-box"><canvas id="chartGauge"></canvas></div>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <div class="actions" style="display:none;">
+    <button class="btn btn-white" onclick="voltarAoPicker()">Trocar projeto</button>
+    <button class="btn btn-white" onclick="openEditor()">Editar dados</button>
+    <button class="btn btn-navy" onclick="openTeamCard()">Card equipe</button>
+    <button class="btn btn-navy" onclick="openAllTeamCards()">Cards equipes</button>
+    <button class="btn btn-orange" onclick="openCapture(false)">Gerar card PNG</button>
+  </div>
+
+  <div id="ppMenuPanel" style="display:none;">
+    <div class="pp-menu-section">Navegação</div>
+    <button class="pp-menu-item menu-accent" onclick="voltarAoPicker(); closePpMenu();">Início</button>
+    <div class="pp-menu-section pp-edit-only">Editar Dados</div>
+    <button class="pp-menu-item" onclick="ppGerAbrirEditor(currentProjectId); closePpMenu();">Orçamento e forecast</button>
+    <button class="pp-menu-item" onclick="openEditor(); closePpMenu();">Editor Projeto</button>
+    <div class="pp-menu-section">Ações</div>
+    <button class="pp-menu-item pp-edit-only"
+      onclick="renderAll(); closePpMenu();">Atualizar</button>
+    <button class="pp-menu-item" onclick="openTeamCard(); closePpMenu();">Card Equipe</button>
+    <button class="pp-menu-item" onclick="openAllTeamCards(); closePpMenu();">Cards Equipes</button>
+    <button class="pp-menu-item" onclick="openCapture(false); closePpMenu();">Gerar Card PNG</button>
+  </div>
+
+  <script src="./assets/js/00-armazenamento-seguro.js"></script>
+  <script src="./assets/js/01-pfin-floating-tooltip.js"></script>
+
+  <div class="modal-bg" id="modalBg">
+    <div class="modal">
+      <div class="modal-head">
+        <div>Base de Dados <small>Edite somente os campos básicos; desvios, percentuais e status são calculados
+            automaticamente</small></div>
+        <button class="btn btn-white" onclick="closeEditor()">Fechar</button>
+      </div>
+      <div class="modal-body">
+        <aside>
+          <div class="editor-card">
+            <h3>Produção dia · total geral</h3>
+            <p style="margin:0 0 8px;color:var(--muted);font-size:10px;font-weight:800;line-height:1.35">
+              Os lançamentos vêm do CSV importado. Aqui você confere e, se precisar, corrige ou remove uma data.
+              A linha do gráfico usa a meta diária total; as barras usam a produção total de cada data.
+            </p>
+            
+            <div class="history-editor" id="historyEditor"></div>
+          </div>
+        </aside>
+
+        <main>
+          <div class="edit-wrap">
+            <table class="edit-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Equipe</th>
+                  <th>Meta mês</th>
+                  <th>Meta acum.</th>
+                  <th>Meta dia</th>
+                  <th>Prod. dia</th>
+                  <th>Prod. acum.</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="editRows"></tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-white" onclick="closeEditor()">Cancelar</button>
+        <button class="btn btn-orange" onclick="applyEditor(true)">Aplicar e fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-card-page" id="teamCardPage">
+    <div class="tc-page-header">
+      <button class="pp-menu-btn" onclick="togglePpMenu(event)" title="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="logo-marca"><span class="ap">Painel</span><span class="plus">de Produtividade</span></div>
+      <span class="tc-page-header-title">Card de Equipe</span>
+      <div class="tc-head-actions">
+        
+        <button class="btn btn-green pp-edit-only" onclick="salvarTeamCard()">Salvar</button>
+        <button class="btn btn-orange" onclick="downloadTeamCardPng()">Baixar PNG</button>
+        <button class="btn btn-back" onclick="closeTeamCard()">Voltar</button>
+      </div>
+    </div>
+    <aside class="tc-sidebar">
+      <div class="tc-sidebar-title pp-edit-only">Edição rápida do card</div>
+
+      <div class="tc-field">
+        <label>Equipe</label>
+        
+        <input type="search" id="tcBusca" class="pp-busca-equipe pp-busca-bloco"
+          placeholder="Pesquisar equipe..." autocomplete="off"
+          oninput="ppFiltrarListaEquipes('tcSelect', this.value)">
+        <select id="tcSelect" class="pp-sel-search" onchange="selectTeamCard(this.value)"></select>
+      </div>
+
+      <div class="atc-quick-nav">
+        <button class="btn btn-white" onclick="stepTeamCard(-1)">◀ Equipe anterior</button>
+        <button class="btn btn-white" onclick="stepTeamCard(1)">Próxima equipe ▶</button>
+      </div>
+
+      <div class="pp-edit-only">
+        <div class="tc-section-title">Cores do layout</div>
+        <div class="tc-color-panel">
+          <div class="tc-color-grid">
+            <div class="tc-color-field"><label>Topo do card</label><input type="color" id="tcHeadColor" value="#161B24">
+            </div>
+            <div class="tc-color-field"><label>Destaques</label><input type="color" id="tcAccentColor" value="#1F6FB2">
+            </div>
+            <div class="tc-color-field"><label>Fundo interno</label><input type="color" id="tcPaperBgColor"
+                value="#F7F8FA"></div>
+            <div class="tc-color-field"><label>Fundo da tela</label><input type="color" id="tcPageBgColor"
+                value="#F2F3F5"></div>
+          </div>
+          <div class="tc-theme-buttons">
+            <button class="btn btn-orange" onclick="applyTeamCardThemePreset('padrao')">Tema padrão</button>
+            <button class="btn btn-navy" onclick="applyTeamCardThemePreset('navy')">Azul padrão</button>
+            <button class="btn btn-white" onclick="applyTeamCardThemePreset('clean')">Clean claro</button>
+            <button class="btn btn-white" onclick="resetTeamCardTheme()">Restaurar</button>
+          </div>
+          <p class="tc-color-hint">Altera somente as cores do layout do card e do PNG. As fontes e textos permanecem no
+            padrão atual.</p>
+        </div>
+
+        <div class="tc-form-grid">
+          <div class="tc-field"><label>Base</label><input id="tcBase" placeholder="Base / cidade / contrato"></div>
+          <div class="tc-field"><label>Serviço</label><input id="tcServico" placeholder="Ex.: manutenção preventiva"></div>
+        </div>
+
+        <div class="tc-form-grid">
+          <div class="tc-field">
+            <label>Líder</label>
+            <input id="tcLider" placeholder="Nome do líder">
+          </div>
+          <div class="tc-field">
+            <label>Supervisor</label>
+            <input id="tcSupervisor" placeholder="Nome do supervisor">
+          </div>
+        </div>
+
+        <div class="tc-field">
+          <label>Responsável pela ação</label>
+          <input id="tcResponsavel" placeholder="Supervisor / coordenador">
+        </div>
+
+        <div class="tc-form-grid">
+          <div class="tc-field"><label>Data da ação</label><input id="tcDataAcao" placeholder="dd/mm/aaaa"></div>
+          <div class="tc-field"><label>Prazo / reavaliação</label><input id="tcPrazo" placeholder="dd/mm/aaaa"></div>
+        </div>
+
+        <div class="tc-form-grid">
+          <div class="tc-field">
+            <label>Status</label>
+            <select id="tcStatus">
+              <option>Aberto</option>
+              <option>Em andamento</option>
+              <option>Reavaliar</option>
+              <option>Concluído</option>
+            </select>
+          </div>
+          <div class="tc-field">
+            <label>Fotos da vistoria</label>
+            <input type="file" id="tcPhotos" accept="image/*" multiple onchange="setTeamCardPhotos(event)"
+              class="tc-photo-input-hidden">
+            <label for="tcPhotos" class="tc-photo-btn">Anexar fotos</label>
+            <small class="tc-photo-hint"></small>
+            <div id="tcPhotoList" class="tc-photo-list"></div>
+          </div>
+        </div>
+
+        <div class="tc-section-title">Textos do card</div>
+        <div class="tc-field"><label>Diagnóstico</label><textarea id="tcDiagnostico"></textarea></div>
+        <div class="tc-field"><label>Ação tomada / plano</label><textarea id="tcAcao"></textarea></div>
+        <div class="tc-field"><label>Resultado</label><textarea id="tcResultado"></textarea></div>
+      </div>
+
+    </aside>
+
+    <main class="tc-main">
+      <section id="teamCardPaper" class="tc-paper"></section>
+    </main>
+  </div>
+
+  <div class="all-team-card-page" id="allTeamCardsPage">
+    <div class="tc-page-header">
+      <button class="pp-menu-btn" onclick="togglePpMenu(event)" title="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="logo-marca"><span class="ap">Painel</span><span class="plus">de Produtividade</span></div>
+      <span class="tc-page-header-title">Cards Equipes</span>
+      <div class="tc-head-actions">
+        <button class="btn btn-back" onclick="closeAllTeamCards()">Voltar</button>
+      </div>
+    </div>
+    <aside class="atc-sidebar">
+      <div class="atc-sidebar-title">Card para a equipe de campo</div>
+      <p class="atc-help">
+        Resumo de uma equipe para enviar ao campo: meta, produção, desvio e quanto produzir por dia até o fechamento.
+      </p>
+
+      <div class="tc-field">
+        <label>Filtrar equipe</label>
+        
+        <input type="search" id="atcBusca" class="pp-busca-equipe pp-busca-bloco"
+          placeholder="Pesquisar equipe..." autocomplete="off"
+          oninput="ppFiltrarListaEquipes('atcSelect', this.value)">
+        <select id="atcSelect" class="pp-sel-search" onchange="selectAllTeamCard(this.value)"></select>
+      </div>
+
+      <div class="atc-quick-nav">
+        <button class="btn btn-white" onclick="stepAllTeamCard(-1)">◀ Equipe anterior</button>
+        <button class="btn btn-white" onclick="stepAllTeamCard(1)">Próxima equipe ▶</button>
+      </div>
+
+      <div class="atc-info-box" id="atcInfoBox"></div>
+
+      <div class="atc-actions">
+        <button class="btn btn-orange" onclick="downloadAllTeamCardsPng()">Baixar PNG individual</button>
+        <button class="btn btn-orange" id="atcDownloadAllBtn" onclick="downloadAllTeamCardsPngAll()">Baixar PNG todas
+          equipes</button>
+      </div>
+    </aside>
+
+    <main class="atc-main">
+      <section id="allTeamCardsPaper" class="atc-paper"></section>
+    </main>
+  </div>
+
+  <div id="allTeamCardsExportStage" style="position:fixed;left:-22000px;top:0;z-index:-1;background:transparent;"></div>
+
+  <div id="teamCardExportStage" style="position:fixed;left:-20000px;top:0;z-index:-1;background:transparent;"></div>
+  <div class="capture-bg" id="captureBg">
+    <div class="capture-shell">
+      <div class="capture-toolbar">
+        <button class="btn btn-white" onclick="closeCapture()">Fechar</button>
+        <button class="btn btn-orange" onclick="downloadCapture()">Baixar PNG</button>
+      </div>
+      <div id="captureCard" class="capture-card"></div>
+    </div>
+  </div>
+
+  <script src="./assets/js/02-core.js"></script>
+
+  <script src="./assets/js/03-state-sync.js"></script>
+
+  <script src="./assets/js/04-banco-diario-sync.js"></script>
+
+  <script src="./assets/js/05-projetos-em-branco.js"></script>
+  <script src="./assets/js/06-empty-teams-guard.js"></script>
+
+  <script src="./assets/js/07-final-fix.js"></script>
+
+  <script src="./assets/js/08-final-polish-29-06.js"></script>
+
+  <script src="./assets/js/09-main-contracts-wip-json.js"></script>
+
+  <script src="./assets/js/10-consolidado-diario-projeto.js"></script>
+
+  <script src="./assets/js/11-fix-dias-editor-aplicar.js"></script>
+
+  <script src="./assets/js/12-editor-csv-historico.js"></script>
+
+  <script src="./assets/js/13-ajuste-csv-data-desempenho.js"></script>
+
+  <div id="projectPickerBg" class="pa-inicio" style="display:none;">
+    <div class="pa-fundo" aria-hidden="true"></div><div class="pa-veu" aria-hidden="true"></div>
+    <section class="pa-inicio-janela" aria-labelledby="paInicioOla">
+      <header class="pa-inicio-topo">
+        <div class="pa-marca"><svg class="pa-simbolo" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="17" width="5" height="9" fill="#161B24"/><rect x="13.5" y="12" width="5" height="14" fill="#161B24"/><rect x="22" y="6" width="5" height="20" fill="#E8590C"/><rect x="3" y="27.5" width="26" height="1.5" fill="#161B24"/></svg><span>Painel de Produtividade</span></div>
+        <div class="pa-inicio-usuario"><span id="paInicioUsuario"></span><button type="button" class="pa-botao-linha" id="paInicioAdmin" hidden onclick="openAdminPanel()">Administração</button><button type="button" class="pa-botao-linha" onclick="logoutApp()">Sair</button></div>
+      </header>
+      <div class="pa-inicio-cabeca">
+        <h1 class="pa-inicio-ola" id="paInicioOla">Olá</h1>
+        <p class="pa-inicio-data" id="paInicioData"></p>
+      </div>
+      <div id="paInicioConteudo" class="pa-inicio-conteudo" aria-live="polite"></div>
+    </section>
+    <div class="pa-legado" aria-hidden="true">
+      <div id="pickerUserLabel"></div>
+      <div class="project-grid" id="pickerProjectList"></div>
+      <div class="picker-legado">
+        <h2 id="pickerDetailTitle"></h2>
+        <p id="pickerDetailSub"></p>
+        <select id="pickerSelect" onchange="pickerSelectChange()" tabindex="-1"></select>
+        <button id="pickerOpenBtn" onclick="pickerOpenSelected()" tabindex="-1" type="button"></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="adminPanelBg"
+    style="display:none;position:fixed;inset:0;z-index:250;background:rgba(5,9,20,.72);align-items:center;justify-content:center;padding:14px">
+    
+    <div class="adm-janela" role="dialog" aria-modal="true" aria-labelledby="admTitulo">
+      <header class="adm-topo">
+        <div class="adm-marca">
+          <span class="adm-selo">PP</span>
+          <div class="adm-marca-texto">
+            <h2 id="admTitulo">Central de Administração</h2>
+            <small>Usuários, acessos e dados na nuvem</small>
+          </div>
+        </div>
+        <div class="adm-topo-dir">
+          <span class="adm-pulso" title="Pessoas com o painel aberto agora"><i></i><b id="admPulsoN">-</b>&nbsp;online</span>
+          <button class="adm-fechar" onclick="closeAdminPanel()" aria-label="Fechar a administração">×</button>
+        </div>
+      </header>
+
+      <nav class="adm-menu" aria-label="Seções da administração">
+        <button id="adminTabBtnVisao" class="adm-item" onclick="showAdminTab('visao')">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span>Visão geral</span></button>
+        <button id="adminTabBtnUsers" class="adm-item" onclick="showAdminTab('users')">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17.5" cy="9" r="2.6"/><path d="M16.5 14.6c2.6.1 4.4 1.7 5 4.4"/></svg>
+          <span>Usuários</span></button>
+        <button id="adminTabBtnCreate" class="adm-item" onclick="showAdminTab('create')">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3 20c.6-3.6 3.5-5.5 7-5.5 1.4 0 2.7.3 3.8.9"/><path d="M18 14v6M15 17h6"/></svg>
+          <span>Novo usuário</span></button>
+        <button id="adminTabBtnContratos" class="adm-item" onclick="showAdminTab('contratos')">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.7 4.7 0 0 0 7 18.5z"/><path d="M12 11v5M9.8 13.8 12 16l2.2-2.2"/></svg>
+          <span>Contratos e nuvem</span></button>
+        <button id="adminTabBtnOnline" class="adm-item" onclick="showAdminTab('online')">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M4.9 4.9a10 10 0 0 0 0 14.2M19.1 4.9a10 10 0 0 1 0 14.2"/></svg>
+          <span>Online agora</span></button>
+        <button id="adminTabBtnLog" class="adm-item" onclick="showAdminTab('log')">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h5"/></svg>
+          <span>Log de edições</span></button>
+        <button id="adminTabBtnAcessos" class="adm-item" onclick="showAdminTab('acessos')">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+          <span>Histórico de acessos</span></button>
+        <p class="adm-menu-nota">Somente o administrador vê esta área.</p>
+      </nav>
+
+      <main class="adm-conteudo">
+        
+        <section id="adminTabVisao" class="adm-aba">
+          <div class="adm-cab">
+            <div>
+              <h3>Visão geral</h3>
+              <p>Um retrato do uso do painel agora. Os números desta tela contam pessoas e acessos e não mexem em nenhum valor dos contratos.</p>
+            </div>
+            <button class="adm-btn" onclick="adminRenderVisaoGeral(true)">Atualizar</button>
+          </div>
+          <div class="adm-kpis">
+            <div class="adm-kpi"><span class="adm-kpi-rot">Usuários ativos</span><b id="admKpiAtivos">-</b><small id="admKpiAtivosSub">&nbsp;</small></div>
+            <div class="adm-kpi adm-kpi-verde"><span class="adm-kpi-rot">Online agora</span><b id="admKpiOnline">-</b><small id="admKpiOnlineSub">&nbsp;</small></div>
+            <div class="adm-kpi adm-kpi-azul"><span class="adm-kpi-rot">Entraram em 7 dias</span><b id="admKpiSemana">-</b><small id="admKpiSemanaSub">&nbsp;</small></div>
+            <div class="adm-kpi adm-kpi-laranja"><span class="adm-kpi-rot">Salvamentos em 7 dias</span><b id="admKpiEdicoes">-</b><small id="admKpiEdicoesSub">&nbsp;</small></div>
+          </div>
+          <div class="adm-grade2">
+            <div class="adm-cartao">
+              <h4>Pontos de atenção</h4>
+              <ul id="admAlertas" class="adm-alertas"><li class="adm-vazio">Carregando...</li></ul>
+            </div>
+            <div class="adm-cartao">
+              <h4>Perfis cadastrados</h4>
+              <div id="admPerfis" class="adm-perfis"><p class="adm-vazio">Carregando...</p></div>
+            </div>
+          </div>
+          <div class="adm-cartao">
+            <h4>Últimos salvamentos</h4>
+            <div id="admRecentes"><p class="adm-vazio">Carregando...</p></div>
+          </div>
+        </section>
+
+        <section id="adminTabUsers" class="adm-aba" style="display:none">
+          <div class="adm-cab">
+            <div>
+              <h3>Usuários cadastrados</h3>
+              <p>Busque por nome ou e-mail e filtre por perfil. Os botões de cada linha continuam fazendo o mesmo que antes.</p>
+            </div>
+            <button class="adm-btn adm-btn-forte" onclick="showAdminTab('create')">+ Novo usuário</button>
+          </div>
+          <div class="adm-barra">
+            <input id="admUserBusca" class="adm-busca" type="search" placeholder="Buscar por nome ou e-mail" oninput="adminFiltrarUsuarios()" autocomplete="off">
+            <div id="admUserChips" class="adm-chips"></div>
+            <span id="admUserConta" class="adm-conta">-</span>
+          </div>
+          <div id="adminUserList" class="adm-lista">
+            <p class="adm-vazio">Carregando...</p>
+          </div>
+        </section>
+
+        <section id="adminTabCreate" class="adm-aba" style="display:none">
+          <div class="adm-cab">
+            <div>
+              <h3>Novo usuário</h3>
+              <p>A pessoa entra com o e-mail e a senha inicial. Controller, coordenador e gerente só veem os contratos marcados.</p>
+            </div>
+          </div>
+          <div class="adm-cartao">
+            <div class="form-grid">
+              <div class="field"><label>Nome completo</label><input type="text" id="newUserName"
+                  placeholder="Nome do colaborador"></div>
+              <div class="field"><label>E-mail</label><input type="email" id="newUserEmail"
+                  placeholder="email@empresa.com.br"></div>
+              <div class="field"><label>Senha inicial</label><input type="password" id="newUserPass"
+                  placeholder="Mínimo 6 caracteres"></div>
+              <div class="field"><label>Perfil de acesso</label>
+                <select id="newUserRole" onchange="adminToggleProjects()">
+                  <option value="controller">Controller (só seus projetos)</option>
+                  <option value="coordenador">Coordenador (edita só seus projetos · vê tudo no Gerencial)</option>
+                  <option value="gerente">Gerente (projetos vinculados)</option>
+                  <option value="diretor">Diretor (todos os projetos)</option>
+                  <option value="ceo">CEO / Presidente (todos + executivo)</option>
+                  <option value="admin">Administrador (acesso total)</option>
+                </select>
+              </div>
+            </div>
+            <div id="newUserProjectsWrap" style="margin-top:14px">
+              <label class="adm-rotulo">Projetos com acesso (marque os contratos)</label>
+              <div id="newUserProjects" style="display:flex;flex-direction:row;flex-wrap:wrap;gap:8px"></div>
+            </div>
+            <div id="newUserVerExecWrap" style="margin-top:12px">
+              <label class="adm-marcar">
+                <input type="checkbox" id="newUserVerExec" style="width:auto;accent-color:#161B24">
+                Acesso ao Acompanhamento Gerencial
+              </label>
+            </div>
+            <div id="newUserReadonlyWrap" style="margin-top:8px">
+              <label class="adm-marcar">
+                <input type="checkbox" id="newUserReadonly" style="width:auto;accent-color:#161B24">
+                Somente visualização (não pode editar)
+              </label>
+            </div>
+            <div style="margin-top:16px;display:flex;flex-direction:row;align-items:center;gap:12px;flex-wrap:wrap">
+              <button class="adm-btn adm-btn-forte" onclick="adminCreateUser()">Criar usuário</button>
+              <span id="adminCreateMsg" style="font-size:12px;font-weight:900"></span>
+            </div>
+          </div>
+        </section>
+
+        <section id="adminTabContratos" class="adm-aba" style="display:none">
+          <div class="adm-cab">
+            <div>
+              <h3>Contratos e nuvem</h3>
+              <p>Quem pode editar cada contrato e o que está guardado na nuvem, mês a mês. "Conferir" e "Baixar cópia" apenas LEEM a nuvem: nada é gravado nem apagado.</p>
+            </div>
+            <div class="adm-cab-botoes">
+              <button class="adm-btn" onclick="adminConferirNuvem()">Conferir meses na nuvem</button>
+              <button class="adm-btn adm-btn-verde" onclick="adminBaixarCopia()">Baixar cópia de segurança</button>
+              <button class="adm-btn" id="admRestaurarDemo" hidden onclick="ppRestaurarDemonstracao()">Voltar aos dados originais</button>
+            </div>
+          </div>
+          <p id="admNuvemStatus" class="adm-status">&nbsp;</p>
+          <div id="admContratosLista" class="adm-contratos"><p class="adm-vazio">Carregando...</p></div>
+        </section>
+
+        <section id="adminTabOnline" class="adm-aba" style="display:none">
+          <div class="adm-cab">
+            <div>
+              <h3>Online agora</h3>
+              <p>Sessões ativas nos últimos 90 segundos. Atualiza sozinho.</p>
+            </div>
+            <span id="adminOnlineCount" class="adm-pilula adm-pilula-verde">0 online</span>
+          </div>
+          <div class="adm-cartao">
+            <div id="adminOnlineList" class="adm-lista">
+              <p class="adm-vazio">Carregando...</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="adminTabLog" class="adm-aba" style="display:none">
+          <div class="adm-cab">
+            <div>
+              <h3>Log de edições</h3>
+              <p>Quem salvou, em qual contrato e quando. As 200 mais recentes.</p>
+            </div>
+            <button class="adm-btn" onclick="adminRenderEditLog()">Atualizar</button>
+          </div>
+          <div class="adm-cartao">
+            <div id="adminEditLogList" class="adm-lista" style="max-height:60vh">
+              <p class="adm-vazio">Carregando...</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="adminTabAcessos" class="adm-aba" style="display:none">
+          <div class="adm-cab">
+            <div>
+              <h3>Histórico de acessos</h3>
+              <p>Quem entrou nos últimos 30 dias, quanto tempo ficou e por quais telas passou. "Exportar CSV" baixa exatamente as linhas exibidas (o filtro vale para o arquivo).</p>
+            </div>
+          </div>
+          <div class="adm-cartao">
+            <div class="adm-barra">
+              <input id="adminAcessosFiltro" class="adm-busca" type="text" placeholder="Filtrar por usuário, perfil ou tela" oninput="adminFiltrarAcessos()">
+              <span id="adminAcessosCount" class="adm-pilula adm-pilula-azul">-</span>
+              <button class="adm-btn" onclick="adminRenderAcessos()">Atualizar</button>
+              <button class="adm-btn adm-btn-verde" onclick="adminExportarAcessosCsv()">Exportar CSV</button>
+            </div>
+            <div id="adminAcessosList" class="adm-lista" style="max-height:34vh">
+              <p class="adm-vazio">Carregando...</p>
+            </div>
+          </div>
+          <div class="adm-cartao">
+            <div class="adm-barra">
+              <h4 style="margin:0">Último acesso por usuário</h4>
+              <span id="adminUltimoAcessoCount" class="adm-pilula adm-pilula-verde">-</span>
+              <button class="adm-btn adm-btn-verde" onclick="adminExportarUltimoAcessoCsv()">Exportar CSV</button>
+            </div>
+            <p class="adm-nota">Quando cada pessoa esteve no painel pela última vez. A coluna <b>Fonte</b> diz de onde veio a informação:
+              <b>login</b> é o carimbo gravado na entrada; <b>presença</b> vem do sinal que o painel envia a cada 30 segundos;
+              <b>edição</b> é a última vez que a pessoa salvou algo. Quem nunca apareceu fica como <b>sem registro</b>.</p>
+            <div id="adminUltimoAcessoList" class="adm-lista" style="max-height:52vh">
+              <p class="adm-vazio">Carregando...</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="adm-rodape">
+        <span>As ações de usuário gravam na hora. Nenhuma tela desta área altera números dos contratos.</span>
+        <button class="adm-btn" onclick="closeAdminPanel()">Fechar</button>
+      </footer>
+    </div>
+  </div>
+
+  <button id="adminEntryBtn" onclick="openAdminPanel()"
+    style="display:none;position:fixed;left:12px;bottom:12px;z-index:400;background:#161B24;color:#fff;border:0;border-radius:12px;padding:9px 14px;font-size:11px;font-weight:950;box-shadow:0 5px 18px rgba(22,27,36,.28);cursor:pointer;letter-spacing:.03em;text-transform:uppercase">
+    ⚙ Admin
+  </button>
+
+  <script src="./assets/js/14-auth-login-admin.js"></script>
+
+  <div id="editUserBg"
+    style="display:none;position:fixed;inset:0;z-index:300;background:rgba(5,9,20,.78);align-items:center;justify-content:center;padding:14px">
+    
+    <div
+      style="background:#fff;border-radius:18px;width:min(520px,98vw);max-height:90vh;overflow:visible;box-shadow:0 30px 80px rgba(0,0,0,.4);padding:28px 28px 20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <span style="font-size:15px;font-weight:950;color:#161B24">Editar Usuário</span>
+        <button onclick="closeEditUser()"
+          style="background:#F2F3F5;border:0;border-radius:50%;width:30px;height:30px;font-size:16px;cursor:pointer;color:#67707C;line-height:30px;text-align:center">&times;</button>
+      </div>
+
+      <label style="display:block;margin-bottom:12px">
+        <span
+          style="font-size:10px;font-weight:950;text-transform:uppercase;color:#67707C;letter-spacing:.06em;display:block;margin-bottom:4px">Nome
+          completo</span>
+        <input id="editNome" type="text" placeholder="Nome do usuário"
+          style="width:100%;box-sizing:border-box;border:1.5px solid #D2D7DE;border-radius:10px;padding:10px 12px;font-size:13px;outline:none;color:#161B24">
+      </label>
+
+      <label style="display:block;margin-bottom:12px">
+        <span
+          style="font-size:10px;font-weight:950;text-transform:uppercase;color:#67707C;letter-spacing:.06em;display:block;margin-bottom:4px">E-mail</span>
+        <input id="editEmail" type="email" readonly
+          style="width:100%;box-sizing:border-box;border:1.5px solid #D2D7DE;border-radius:10px;padding:10px 12px;font-size:13px;background:#F2F3F5;color:#67707C;cursor:not-allowed">
+      </label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        
+        <div style="display:block">
+          <span
+            style="font-size:10px;font-weight:950;text-transform:uppercase;color:#67707C;letter-spacing:.06em;display:block;margin-bottom:4px">Perfil</span>
+          <select id="editRole" onchange="editToggleProjects(this)"
+            style="width:100%;box-sizing:border-box;border:1.5px solid #D2D7DE;border-radius:10px;padding:10px 12px;font-size:13px;color:#161B24;background:#fff;outline:none">
+            <option value="admin">Administrador</option>
+            <option value="ceo">CEO / Presidente</option>
+            <option value="diretor">Diretor</option>
+            <option value="gerente">Gerente</option>
+            <option value="coordenador">Coordenador</option>
+            <option value="controller">Controller</option>
+          </select>
+        </div>
+        <div style="display:block">
+          <span
+            style="font-size:10px;font-weight:950;text-transform:uppercase;color:#67707C;letter-spacing:.06em;display:block;margin-bottom:4px">Status</span>
+          <select id="editStatus"
+            style="width:100%;box-sizing:border-box;border:1.5px solid #D2D7DE;border-radius:10px;padding:10px 12px;font-size:13px;color:#161B24;background:#fff;outline:none">
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="editProjArea" style="display:none;margin-bottom:12px">
+        <span
+          style="font-size:10px;font-weight:950;text-transform:uppercase;color:#67707C;letter-spacing:.06em;display:block;margin-bottom:8px">Projetos
+          vinculados</span>
+        <div id="editProjChecks"
+          style="border:1.5px solid #D2D7DE;border-radius:10px;padding:10px 14px;max-height:160px;overflow-y:auto">
+        </div>
+      </div>
+
+      <div id="editVerExecWrap" style="margin-bottom:10px">
+        <label
+          style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:850;color:#3F4752;cursor:pointer">
+          <input type="checkbox" id="editVerExec" style="width:auto;accent-color:#161B24">
+          Acesso ao Acompanhamento Gerencial
+        </label>
+      </div>
+      <div id="editReadonlyWrap" style="margin-bottom:10px">
+        <label
+          style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:850;color:#3F4752;cursor:pointer">
+          <input type="checkbox" id="editReadonly" style="width:auto;accent-color:#161B24">
+          Somente visualização (não pode editar)
+        </label>
+      </div>
+
+      <p id="editMsg" style="font-size:11px;text-align:center;margin:0 0 12px;min-height:16px"></p>
+
+      <div style="display:flex;gap:10px">
+        <button onclick="closeEditUser()"
+          style="flex:1;background:#F2F3F5;color:#3F4752;border:0;border-radius:12px;padding:11px;font-size:12px;font-weight:950;cursor:pointer">Cancelar</button>
+        <button onclick="adminSaveUser()"
+          style="flex:2;background:#161B24;color:#fff;border:0;border-radius:12px;padding:11px;font-size:12px;font-weight:950;cursor:pointer">Salvar
+          alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/15-history-firestore-sync.js"></script>
+
+  <script src="./assets/js/16-producao-periodo-editor.js"></script>
+
+  <script src="./assets/js/17-select-ui-and-patches.js"></script>
+
+  <script src="./assets/js/18-integridade-dados.js"></script>
+
+  <script src="./assets/js/19-calendario-dias-uteis.js"></script>
+  <script src="./assets/js/20-historico-acessos.js"></script>
+  <script src="./assets/js/21-comentario-equipe.js"></script>
+  
+  <script src="./assets/js/22-troca-de-tela.js"></script>
+  <script src="./assets/js/23-admin-central.js"></script>
+  <script src="./assets/js/25-entrada-e-inicio.js"></script>
+  <script src="./assets/gerencial/01-calculo.js"></script>
+  <script src="./assets/gerencial/02-tela.js"></script>
+  <script src="./assets/gerencial/03-editor.js"></script>
+
+</body>
+
+</html>

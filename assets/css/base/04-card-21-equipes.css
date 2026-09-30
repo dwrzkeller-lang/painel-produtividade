@@ -1,0 +1,446 @@
+    .all-team-card-page {
+      position: fixed;
+      inset: 0;
+      z-index: 74;
+      display: none;
+      grid-template-rows: 56px 1fr;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 10px;
+      background: var(--tc-page-bg, #F2F3F5);
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .all-team-card-page.open {
+      display: grid;
+    }
+
+    .atc-sidebar {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 10px 28px rgba(22,27,36, .12);
+      padding: 18px 14px;
+      min-height: 0;
+      max-height: 100%;
+      align-self: start;
+      overflow-y: auto;
+    }
+
+    .atc-sidebar-title {
+      color: var(--navy);
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+
+    .atc-help {
+      color: #67707C;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.45;
+      margin: 0 0 14px;
+    }
+
+    .atc-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .atc-actions .btn {
+      box-shadow: none;
+      padding: 11px 10px;
+      font-size: 11.5px;
+    }
+
+    .atc-main {
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 8px 0 24px;
+    }
+
+    .atc-paper {
+      width: 1600px;
+      min-height: 1080px;
+      background: var(--tc-paper-bg, #F7F8FA);
+      border: 1px solid var(--tc-border-color, #D8DCE2);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(22,27,36, .12);
+    }
+
+    .atc-card-head {
+      min-height: 90px;
+      background: var(--tc-head-bg, var(--navy));
+      color: #fff;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .atc-card-title {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .atc-card-subtitle {
+      margin-top: 9px;
+      font-size: 14px;
+      font-weight: 900;
+      color: #E7F0F9;
+    }
+
+    .atc-date-box {
+      text-align: right;
+      font-weight: 950;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .atc-date-box small {
+      display: block;
+      font-size: 13px;
+      letter-spacing: .04em;
+      opacity: .96;
+    }
+
+    .atc-date-box b {
+      display: block;
+      margin-top: 4px;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .atc-body {
+      padding: 14px;
+    }
+
+    .atc-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+
+    .atc-kpi {
+      background: #fff;
+      border: 1px solid #D8DCE2;
+      border-radius: 16px;
+      min-height: 82px;
+      padding: 12px 13px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .atc-kpi::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: var(--tc-accent, var(--orange));
+    }
+
+    .atc-kpi.good::before {
+      background: var(--green);
+    }
+
+    .atc-kpi.bad::before {
+      background: var(--red);
+    }
+
+    .atc-kpi.blue::before {
+      background: var(--blue);
+    }
+
+    .atc-kpi-title {
+      color: #11161E;
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+
+    .atc-kpi-value {
+      margin-top: 8px;
+      color: #11161E;
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .atc-kpi-value.good {
+      color: var(--green);
+    }
+
+    .atc-kpi-value.bad {
+      color: var(--red);
+    }
+
+    .atc-kpi-value.blue {
+      color: var(--blue);
+    }
+
+    .atc-kpi-sub {
+      margin-top: 8px;
+      color: #5E6672;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .atc-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: #11161E;
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin: 6px 0 10px;
+    }
+
+    .atc-section-head small {
+      color: #67707C;
+      font-size: 11px;
+      letter-spacing: 0;
+    }
+
+    .atc-team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .atc-team-card {
+      background: #fff;
+      border: 1px solid #D8DCE2;
+      border-radius: 16px;
+      min-height: 125px;
+      padding: 10px 11px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .atc-team-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: #E0A100;
+    }
+
+    .atc-team-card.excelente::before {
+      background: #1E8A4C;
+    }
+
+    .atc-team-card.alerta::before {
+      background: #D0402B;
+    }
+
+    .atc-team-card.atencao::before {
+      background: #E0A100;
+    }
+
+    .atc-team-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .atc-team-name {
+      color: #11161E;
+      font-size: 17px;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: .02em;
+    }
+
+    .atc-team-base {
+      margin-top: 4px;
+      color: #67707C;
+      font-size: 10.5px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .atc-badge {
+      min-width: 78px;
+      text-align: center;
+      color: #fff;
+      border-radius: 999px;
+      padding: 4px 7px;
+      font-size: 9px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .atc-badge.excelente {
+      background: #1E8A4C;
+    }
+
+    .atc-badge.atencao {
+      background: #E0A100;
+    }
+
+    .atc-badge.alerta {
+      background: #D0402B;
+    }
+
+    .atc-team-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px 9px;
+    }
+
+    .atc-team-metric small {
+      display: block;
+      color: #67707C;
+      font-size: 9.5px;
+      font-weight: 950;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .atc-team-metric b {
+      display: block;
+      color: #11161E;
+      font-size: 12.8px;
+      font-weight: 950;
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .atc-team-metric b.good {
+      color: #1E8A4C;
+    }
+
+    .atc-team-metric b.bad {
+      color: #D0402B;
+    }
+
+    .atc-team-metric b.blue {
+      color: #1F6FB2;
+    }
+
+    .atc-progress {
+      height: 7px;
+      margin-top: 9px;
+      background: #EEF0F3;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .atc-progress span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--tc-accent, var(--orange));
+      border-radius: 999px;
+    }
+
+    .atc-progress.good span {
+      background: #1E8A4C;
+    }
+
+    .atc-progress.bad span {
+      background: #D0402B;
+    }
+
+    .atc-footer-note {
+      margin-top: 12px;
+      background: linear-gradient(90deg, #E7F0F9, #FFFFFF);
+      border: 1px solid #BFD6EC;
+      border-left: 5px solid var(--tc-accent, var(--orange));
+      border-radius: 16px;
+      padding: 10px 14px;
+      color: #1B2433;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .atc-quick-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 8px 0 12px;
+    }
+
+    .atc-quick-nav .btn {
+      box-shadow: none;
+      padding: 10px 8px;
+      font-size: 11px;
+    }
+
+    .atc-info-box {
+      background: #FAFBFC;
+      border: 1px solid #D8DCE2;
+      border-radius: 16px;
+      padding: 12px 13px;
+      margin-bottom: 12px;
+    }
+
+    .atc-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 10px;
+    }
+
+    .atc-info-item small {
+      display: block;
+      color: #67707C;
+      font-size: 10px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .atc-info-item b {
+      display: block;
+      color: #11161E;
+      margin-top: 4px;
+      font-size: 13.5px;
+      font-weight: 950;
+      line-height: 1.15;
+    }
+
+    .atc-main {
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 8px 0 24px;
+    }
+
+    .atc-paper {
+      width: 1220px;
+      min-height: 760px;
+      background: var(--tc-paper-bg, #F7F8FA);
+      border: 1px solid var(--tc-border-color, #D8DCE2);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(22,27,36, .12);
+    }

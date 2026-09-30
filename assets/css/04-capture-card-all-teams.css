@@ -1,0 +1,122 @@
+    #captureCard.pp-capture-fit-all-teams {
+      height: var(--cap-card-height, 900px) !important;
+      grid-template-rows: 36px 88px var(--cap-main-height, 568px) var(--cap-bottom-height, 184px) !important;
+      overflow: hidden !important;
+    }
+
+    #captureCard.pp-capture-fit-all-teams .main {
+      min-height: var(--cap-main-height, 568px) !important;
+    }
+
+    #captureCard.pp-capture-fit-all-teams .table-wrap,
+    #captureCard.pp-capture-fit-all-teams .panel-body {
+      overflow: visible !important;
+    }
+
+    #captureCard.pp-capture-fit-all-teams .table {
+      height: auto !important;
+    }
+
+    #captureCard.pp-capture-fit-all-teams .table th,
+    #captureCard.pp-capture-fit-all-teams .table td {
+      box-sizing: border-box !important;
+      height: var(--cap-row-height, 20px) !important;
+      min-height: var(--cap-row-height, 20px) !important;
+      max-height: var(--cap-row-height, 20px) !important;
+      padding: var(--cap-cell-pad-y, 2px) 4px !important;
+      line-height: 1.06 !important;
+      font-size: var(--cap-font-size, 8.8px) !important;
+      white-space: nowrap !important;
+    }
+
+    #captureCard.pp-capture-fit-all-teams .table th {
+      height: var(--cap-head-height, 20px) !important;
+      min-height: var(--cap-head-height, 20px) !important;
+      max-height: var(--cap-head-height, 20px) !important;
+      font-size: var(--cap-head-font-size, 8px) !important;
+    }
+
+    #captureCard.pp-capture-fit-all-teams .table tfoot td {
+      height: var(--cap-foot-height, 24px) !important;
+      min-height: var(--cap-foot-height, 24px) !important;
+      max-height: var(--cap-foot-height, 24px) !important;
+      font-size: var(--cap-foot-font-size, 9px) !important;
+    }
+
+    #authSplash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #151B26;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      transition: opacity 0.25s ease;
+    }
+
+    #authSplash.splash-hiding {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .splash-brand {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      font-size: 30px;
+      font-weight: 950;
+      letter-spacing: -0.5px;
+    }
+
+    .splash-brand .sp-ap {
+      color: #fff;
+    }
+
+    .splash-brand .sp-plus {
+      color: #E0A100;
+    }
+
+    .splash-brand .sp-qt {
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 15px;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
+    .splash-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .splash-dots span {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      animation: sdot 1.2s ease-in-out infinite;
+    }
+
+    .splash-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .splash-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes sdot {
+
+      0%,
+      80%,
+      100% {
+        opacity: 0.25;
+        transform: scale(0.8);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+    }

@@ -1,0 +1,185 @@
+:root {
+  
+  --pp-curva: cubic-bezier(.22, .61, .36, 1);
+  --pp-tempo-tela: .28s;
+  --pp-tempo-toque: .16s;
+}
+
+@keyframes ppEntradaJanela {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(.994);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes ppEntradaPainel {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ppEntradaVeu {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body.app-locked .login-screen,
+#projectPickerBg {
+  animation: ppEntradaPainel var(--pp-tempo-tela) var(--pp-curva);
+}
+
+body:not(.app-locked):not(.executive-mode) .dashboard {
+  animation: ppEntradaPainel var(--pp-tempo-tela) var(--pp-curva);
+}
+
+body.executive-mode .executive-portal {
+  animation: ppEntradaPainel var(--pp-tempo-tela) var(--pp-curva);
+}
+
+.modal-bg.open,
+.capture-bg.open {
+  animation: ppEntradaVeu var(--pp-tempo-toque) linear;
+}
+
+.modal-bg.open > .modal,
+.capture-bg.open > .capture-shell {
+  animation: ppEntradaJanela var(--pp-tempo-tela) var(--pp-curva);
+}
+
+.team-card-page.open,
+.all-team-card-page.open {
+  animation: ppEntradaPainel var(--pp-tempo-tela) var(--pp-curva);
+}
+
+@supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
+  .modal-bg.open {
+    -webkit-backdrop-filter: blur(5px) saturate(115%);
+    backdrop-filter: blur(5px) saturate(115%);
+  }
+}
+
+#projectPickerBg .project-tile {
+  transition:
+    background var(--pp-tempo-toque) var(--pp-curva),
+    border-color var(--pp-tempo-toque) var(--pp-curva),
+    color var(--pp-tempo-toque) var(--pp-curva),
+    box-shadow var(--pp-tempo-toque) var(--pp-curva),
+    transform var(--pp-tempo-toque) var(--pp-curva);
+  will-change: transform;
+}
+
+#projectPickerBg .project-tile:hover {
+  transform: translate3d(0, -1px, 0);
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, .55);
+}
+
+#projectPickerBg .project-tile:active {
+  transform: translate3d(0, 0, 0) scale(.995);
+  box-shadow: none;
+  transition-duration: .06s;
+}
+
+#projectPickerBg .project-tile.executivo:hover {
+  box-shadow: 0 10px 24px -8px rgba(31,111,178, .7);
+}
+
+.btn,
+.pp-menu-item,
+.pill {
+  transition:
+    background var(--pp-tempo-toque) var(--pp-curva),
+    border-color var(--pp-tempo-toque) var(--pp-curva),
+    color var(--pp-tempo-toque) var(--pp-curva),
+    box-shadow var(--pp-tempo-toque) var(--pp-curva),
+    transform .08s var(--pp-curva);
+}
+
+.btn:active,
+.pp-menu-item:active {
+  transform: scale(.985);
+}
+
+#execLoadingOverlay {
+  animation: none !important;
+  overflow: hidden;
+}
+
+#execLoadingOverlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, #1F6FB2, #22D3EE, transparent);
+  animation: ppVarredura 1.25s var(--pp-curva) infinite;
+  pointer-events: none;
+}
+
+#execLoadingOverlay::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 42%, rgba(224,161,0, .10), transparent 46%);
+  animation: ppRespiro 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ppVarredura {
+  0% { transform: translate3d(-100%, 0, 0); }
+  100% { transform: translate3d(363%, 0, 0); }
+}
+
+@keyframes ppRespiro {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+#execLoadingOverlay .splash-dots span {
+  animation: ppPonto 1.1s var(--pp-curva) infinite;
+}
+
+#execLoadingOverlay .splash-dots span:nth-child(2) { animation-delay: .14s; }
+#execLoadingOverlay .splash-dots span:nth-child(3) { animation-delay: .28s; }
+
+@keyframes ppPonto {
+  0%, 100% { opacity: .35; transform: translate3d(0, 0, 0); }
+  45% { opacity: 1; transform: translate3d(0, -3px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  body.app-locked .login-screen,
+  #projectPickerBg,
+  body:not(.app-locked):not(.executive-mode) .dashboard,
+  body.executive-mode .executive-portal,
+  .modal-bg.open,
+  .modal-bg.open > .modal,
+  .team-card-page.open,
+  .all-team-card-page.open,
+  .capture-bg.open,
+  .capture-bg.open > .capture-shell,
+  #execLoadingOverlay::before,
+  #execLoadingOverlay::after,
+  #execLoadingOverlay .splash-dots span {
+    animation: none !important;
+  }
+
+  #projectPickerBg .project-tile,
+  .btn,
+  .pp-menu-item,
+  .pill {
+    transition: none !important;
+  }
+
+  #projectPickerBg .project-tile:hover,
+  #projectPickerBg .project-tile:active,
+  .btn:active,
+  .pp-menu-item:active {
+    transform: none !important;
+  }
+}

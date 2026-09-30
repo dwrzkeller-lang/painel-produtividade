@@ -1,0 +1,68 @@
+    .actions::before {
+      content: none !important;
+      display: none !important;
+    }
+
+    .pp-global-rights,
+    .login-rights {
+      display: none !important;
+      position: static !important;
+    }
+
+    .pp-final-footer {
+      display: none;
+      width: 100%;
+      text-align: center;
+      color: #67707C;
+      font: 850 10.5px "Inter", "Segoe UI", Arial, sans-serif;
+      letter-spacing: .02em;
+      padding: 10px 8px 14px;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    body:not(.app-locked):not(.executive-mode) .pp-final-footer {
+      display: block;
+    }
+
+    body:not(.app-locked):not(.executive-mode) .dashboard {
+      padding-bottom: 14px !important;
+    }
+
+    body.executive-mode .pp-final-footer {
+      display: none !important;
+    }
+
+    .exec-shell-actions .btn {
+      white-space: nowrap !important;
+    }
+
+    .exec-shell-bar {
+      overflow: hidden !important;
+    }
+
+    .executive-frame {
+      height: calc(100vh - 58px) !important;
+    }
+
+    .editor-actions .btn {
+      white-space: normal !important;
+      line-height: 1.15 !important;
+    }
+
+    .pp-route-hint {
+      display: none !important;
+    }
+
+    @media(max-width:980px) {
+      .actions {
+        position: static !important;
+        width: calc(100% - 12px) !important;
+        margin: 6px !important;
+        flex-wrap: wrap !important;
+      }
+
+      .pp-final-footer {
+        padding-bottom: 16px;
+      }
+    }

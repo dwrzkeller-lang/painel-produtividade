@@ -1,0 +1,173 @@
+#mainTable .badge {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+/* Equipe com comentário: canto dobrado no selo, como nota de planilha */
+#mainTable .badge.pp-tem-coment::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #161B24;
+  border-left: 7px solid transparent;
+  pointer-events: none;
+}
+
+#mainTable .badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(8, 46, 67, .22);
+}
+
+#mainTable .badge.pp-coment-ativo {
+  outline: 2px solid #151B26;
+  outline-offset: 1px;
+}
+
+#mainTable tr.pp-coment-linha > td {
+  padding: 0 !important;
+  background: #F8FAFD;
+  border-bottom: 2px solid #E3E6EA;
+}
+
+@keyframes ppComentEntra {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pp-coment-caixa {
+  padding: 11px 16px 13px;
+  border-left: 4px solid #185A92;
+}
+
+.pp-coment-linha.pp-coment-anima .pp-coment-caixa {
+  animation: none;
+}
+
+.pp-coment-topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 7px;
+}
+
+.pp-coment-titulo {
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #161B24;
+}
+
+.pp-coment-assin {
+  font-size: 10px;
+  font-weight: 800;
+  color: #67707C;
+  background: #EEF0F3;
+  border: 1px solid #DDE4EC;
+  border-radius: 999px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+.pp-coment-editar {
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: #1F6FB2;
+  background: transparent;
+  border: 1px solid #CDD2D9;
+  border-radius: 6px;
+  padding: 2px 9px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease;
+}
+
+.pp-coment-editar:hover {
+  background: #E7F0F9;
+  border-color: #93C5FD;
+}
+
+.pp-coment-texto {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.55;
+  white-space: normal;
+}
+
+.pp-coment-vazio {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #99A1AC;
+  font-style: italic;
+}
+
+.pp-coment-editor {
+  margin-top: 10px;
+}
+
+.pp-coment-campo {
+  width: 100%;
+  box-sizing: border-box;
+  font: 700 12.5px/1.5 "Inter", "Segoe UI", Arial, sans-serif;
+  color: #1F2937;
+  border: 1px solid #CDD2D9;
+  border-radius: 8px;
+  padding: 9px 11px;
+  resize: vertical;
+  min-height: 64px;
+  background: #fff;
+}
+
+.pp-coment-campo:focus {
+  outline: none;
+  border-color: #1F6FB2;
+  box-shadow: 0 0 0 3px rgba(31,111,178, .14);
+}
+
+.pp-coment-acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.pp-coment-acoes .btn {
+  font-size: 10.5px;
+  padding: 5px 12px;
+}
+
+@media (max-width: 900px) {
+  .pp-coment-caixa {
+    padding: 10px 12px 12px;
+  }
+
+  .pp-coment-editar {
+    margin-left: 0;
+  }
+
+  .pp-coment-acoes {
+    flex-direction: column;
+  }
+
+  .pp-coment-acoes .btn {
+    width: 100%;
+  }
+}

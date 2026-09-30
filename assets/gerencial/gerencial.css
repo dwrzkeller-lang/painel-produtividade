@@ -1,0 +1,147 @@
+/* ═══ ACOMPANHAMENTO GERENCIAL · APARÊNCIA ══════════════════════════════════
+   Mesmas peças do painel do contrato: barra escura no topo, indicadores com
+   ícone, janelas com cabeçalho azul, tabelas com total escuro. Tudo quadrado. */
+
+body.executive-mode #executivePortal { padding: 0 !important; background: var(--bg, #F2F3F5) !important; }
+body.executive-mode #executivePortal .exec-shell-bar { display: none !important; }
+.ger-app {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 6px; display: flex; flex-direction: column; gap: 6px;
+  background: var(--bg, #F2F3F5); font-family: "Inter", "Segoe UI", Arial, sans-serif; color: #161B24;
+}
+.ger-titlebar { flex: 0 0 auto; gap: 10px !important; }
+.ger-titlebar .title-text { flex: 1 1 auto; text-align: center; }
+.ger-titlebar .title-date { white-space: nowrap; }
+.ger-titlebar .ger-editar { height: 30px; padding: 0 12px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+
+/* Filtros */
+.ger-filtros {
+  display: flex; flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 10px 22px; padding: 10px 12px;
+  background: #FFFFFF; border: 1px solid var(--line, #D8DCE2); box-shadow: var(--shadow);
+}
+.ger-filtro { display: flex; flex-direction: column; gap: 5px; }
+.ger-rotulo { font-size: 9.5px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #67707C; }
+.ger-chips { display: flex; flex-direction: row; flex-wrap: wrap; gap: 5px; }
+.ger-contrato {
+  height: 28px; padding: 0 12px; border: 1px solid #D8DCE2; background: #FFFFFF; color: #67707C; cursor: pointer;
+  font: 800 11px/1 "Inter", "Segoe UI", Arial, sans-serif;
+}
+.ger-contrato.on { background: #1F6FB2; border-color: #1F6FB2; color: #FFFFFF; }
+.ger-alternar { display: inline-flex; flex-direction: row; border: 1px solid #D8DCE2; background: #FFFFFF; }
+.ger-alternar button { height: 28px; padding: 0 12px; border: 0; border-left: 1px solid #D8DCE2; background: none; color: #3F4752; cursor: pointer; font: 700 11px/1 "Inter", "Segoe UI", Arial, sans-serif; }
+.ger-alternar button:first-child { border-left: 0; }
+.ger-alternar button[aria-pressed="true"] { background: #161B24; color: #FFFFFF; }
+.panel-head .ger-alternar { margin-left: auto; border-color: rgba(255, 255, 255, .35); background: transparent; }
+.panel-head .ger-alternar button { height: 18px; padding: 0 8px; color: #FFFFFF; border-left-color: rgba(255, 255, 255, .35); font-size: 9.5px; text-transform: none; }
+.panel-head .ger-alternar button[aria-pressed="true"] { background: #FFFFFF; color: #1F6FB2; }
+#gerMes { height: 28px; padding: 0 8px; border: 1px solid #D8DCE2; background: #FFFFFF; color: #161B24; font: 700 11px/1 "Inter", "Segoe UI", Arial, sans-serif; }
+#gerMes:disabled { color: #99A1AC; }
+
+/* Indicadores: mesmos cartões do painel, 5 colunas */
+.ger-kpis { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 6px !important; }
+.ger-kpi .value { white-space: nowrap; }
+
+/* Janelas e tabelas */
+.ger-grade2 { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 6px; align-items: start; }
+.ger-janela { min-height: 0 !important; height: auto !important; }
+.ger-janela .panel-head { height: auto !important; min-height: 25px !important; flex-wrap: wrap; row-gap: 4px; padding-top: 3px !important; padding-bottom: 3px !important; }
+.ger-janela .panel-body { padding: 7px !important; overflow: visible !important; }
+.ger-rolagem { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.ger-tabela { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.ger-tabela th, .ger-tabela td {
+  border: 1px solid #E3E6EA; padding: 4px 7px; font-size: 10.5px; line-height: 1.2; text-align: right; font-weight: 700; white-space: nowrap; color: #161B24;
+}
+.ger-tabela thead th { background: #1F6FB2; color: #FFFFFF; font-size: 9px; font-weight: 900; letter-spacing: .03em; text-transform: uppercase; height: 22px; }
+.ger-tabela thead tr.ger-grupos th { background: #185A92; text-align: center; }
+.ger-tabela thead tr.ger-grupos th:empty { background: #1F6FB2; }
+.ger-tabela thead th.aberto { background: #5C94C8; }
+.ger-tabela tbody tr:nth-child(even) td { background: #FAFBFC; }
+.ger-tabela tbody tr:hover td { background: #EEF4FA; }
+.ger-tabela tfoot td, .ger-tabela tr.destaque td { background: #161B24 !important; color: #FFFFFF; font-weight: 900; }
+.ger-tabela tfoot td.ger-var, .ger-tabela tr.destaque td.ger-var { background: #161B24 !important; }
+.ger-tabela td.ger-linha { text-align: left; font-weight: 800; }
+.ger-tabela tr.recuo td.ger-linha { padding-left: 18px; font-weight: 600; color: #3F4752; }
+.ger-tabela tr.forte td { font-weight: 900; }
+.ger-tabela td.ger-centro, .ger-tabela th.ger-centro { text-align: center; }
+.ger-tabela td.ger-esq { text-align: left; }
+.ger-tabela td.ger-texto { text-align: left; white-space: normal; min-width: 280px; font-weight: 500; line-height: 1.35; }
+.ger-tabela td.ger-vazio { color: #C9D3DE; text-align: center; }
+.ger-tabela td.ger-vazio-linha { color: #67707C; font-weight: 600; padding: 12px; }
+.ger-var.st-ok { color: #17703D !important; }
+.ger-var.st-att { color: #8A5D00 !important; background: #FFF3D2 !important; }
+.ger-var.st-alr { color: #B3321F !important; background: #FCE7E3 !important; }
+tfoot .ger-var.st-ok, tr.destaque .ger-var.st-ok { color: #7FD6A1 !important; }
+tfoot .ger-var.st-att, tr.destaque .ger-var.st-att { color: #F2C94C !important; }
+tfoot .ger-var.st-alr, tr.destaque .ger-var.st-alr { color: #FF8A73 !important; }
+.ger-tabela tr.ger-varlinha td { font-weight: 800; }
+.ger-ficha { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; font-size: 9px; font-weight: 900; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
+.ger-ficha.st-ok { background: #E2F3E8; color: #17703D; }
+.ger-ficha.st-att { background: #FFF3D2; color: #8A5D00; }
+.ger-ficha.st-alr { background: #FCE7E3; color: #B3321F; }
+.ger-falta { color: #B3321F; font-weight: 700; }
+.ger-nota { margin: 6px 0 0; font-size: 10px; font-weight: 600; color: #67707C; }
+.ger-politica { margin: 8px 0 0; padding: 7px 9px; background: #F2F3F5; border-left: 3px solid #1F6FB2; font-size: 10.5px; line-height: 1.45; color: #3F4752; }
+.ger-politica b { color: #161B24; }
+.ger-graficos { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; margin-top: 10px; }
+.ger-grafico { position: relative; height: 260px; border: 1px solid #E3E6EA; padding: 6px; background: #FFFFFF; }
+.ger-rodape { padding: 4px 2px 10px; font-size: 10px; font-weight: 600; color: #99A1AC; }
+.ger-vazio-geral { padding: 40px; text-align: center; color: #67707C; font-weight: 700; }
+
+/* Editor de orçamento e forecast */
+.ger-editor-bg { z-index: 1000; }
+.ger-editor { width: min(1320px, 98vw) !important; }
+.ger-editor .modal-head { display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding: 0 12px; }
+.ger-editor-corpo { display: block !important; overflow: auto; padding: 12px !important; }
+.ger-editor .modal-foot { display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 12px; }
+.ger-ed-aviso { margin-right: auto; font-size: 12px; font-weight: 700; color: #8A5D00; }
+.ger-ed-aviso.bom { color: #17703D; }
+.ger-ed-topo { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 10px; }
+.ger-ed-topo label { display: flex; flex-direction: column; gap: 4px; font-size: 9.5px; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; color: #67707C; }
+.ger-ed-topo select, .ger-ed-topo input { height: 30px; min-width: 160px; padding: 0 8px; border: 1px solid #D8DCE2; background: #FFFFFF; color: #161B24; font: 700 12px/1 "Inter", "Segoe UI", Arial, sans-serif; text-transform: none; letter-spacing: 0; }
+.ger-ed-abas { margin-bottom: 10px; }
+.ger-ed-grade { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.ger-ed-grade th, .ger-ed-grade td { border: 1px solid #E3E6EA; padding: 0; font-size: 11px; white-space: nowrap; }
+.ger-ed-grade thead th { background: #1F6FB2; color: #FFFFFF; font-weight: 900; font-size: 9.5px; text-transform: uppercase; height: 24px; padding: 0 6px; text-align: right; }
+.ger-ed-grade thead th.fechado { background: #185A92; }
+.ger-ed-grade tbody th { text-align: left; padding: 0 8px; font-weight: 800; background: #F7F8FA; color: #161B24; }
+.ger-ed-num { width: 100%; min-width: 92px; height: 28px; border: 0; padding: 0 6px; text-align: right; font: 600 11px/1 "Inter", "Segoe UI", Arial, sans-serif; color: #161B24; background: #FFFFFF; }
+.ger-ed-num:focus { outline: 2px solid #1F6FB2; outline-offset: -2px; }
+.ger-ed-num:disabled { background: #F2F3F5; }
+.ger-ed-num.invalido { background: #FCE7E3; color: #B3321F; }
+.ger-ed-total, .ger-ed-calc td { text-align: right; padding: 0 8px !important; font-weight: 800; background: #F7F8FA; }
+.ger-ed-calc th { background: #EEF0F3 !important; }
+.ger-ed-calc td { color: #3F4752; }
+.ger-ed-just { border-collapse: collapse; width: 100%; }
+.ger-ed-just th, .ger-ed-just td { border: 1px solid #E3E6EA; padding: 5px 7px; font-size: 11px; text-align: left; vertical-align: top; }
+.ger-ed-just thead th { background: #1F6FB2; color: #FFFFFF; font-size: 9.5px; font-weight: 900; text-transform: uppercase; }
+.ger-ed-just textarea, .ger-ed-just input { width: 100%; min-width: 140px; border: 1px solid #D8DCE2; padding: 5px 7px; font: 500 12px/1.35 "Inter", "Segoe UI", Arial, sans-serif; color: #161B24; resize: vertical; }
+.ger-ed-just textarea { min-width: 320px; }
+.ger-ed-vazio { padding: 20px 0; color: #67707C; font-weight: 600; }
+
+@media (max-width: 1180px) {
+  .ger-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .ger-grade2, .ger-graficos { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .ger-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .ger-titlebar { flex-wrap: wrap !important; height: auto !important; }
+  .ger-titlebar .title-date { display: none; }
+  .ger-filtros { gap: 8px 12px; }
+}
+
+/* A página rola; as janelas não encolhem para caber na tela */
+.ger-app > * { flex: 0 0 auto; }
+.ger-tabela thead th { white-space: normal; line-height: 1.15; }
+.ger-tabela thead th:first-child { text-align: left; }
+
+/* Editor: as linhas calculadas têm a mesma altura das digitáveis */
+.ger-ed-calc th, .ger-ed-calc td { height: 26px; }
+.ger-ed-num { min-width: 84px; }
+
+/* Barra do topo em telas de notebook: os botões nunca encolhem, o subtítulo
+   cede espaço (reticências) e some abaixo de 1280 px; o título fica inteiro. */
+.ger-titlebar .ger-editar, .ger-titlebar .btn-back { flex: 0 0 auto; }
+.ger-titlebar .title-text { min-width: 0; white-space: nowrap; }
+.ger-titlebar .title-date { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1280px) {
+  .ger-titlebar .title-date { display: none; }
+}

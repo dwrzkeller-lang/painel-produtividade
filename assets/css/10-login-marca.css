@@ -1,0 +1,914 @@
+body.app-locked .login-screen {
+  background:
+    radial-gradient(1100px 620px at 12% -8%, rgba(31,111,178, .10), transparent 60%),
+    linear-gradient(160deg, #F7F8FA 0%, #EDF2F8 52%, #F7F8FA 100%);
+  padding: 26px;
+}
+
+body.app-locked .login-card {
+  grid-template-columns: 1.12fr .88fr !important;
+  width: min(1060px, 96vw) !important;
+  max-width: min(1060px, 96vw) !important;
+  min-height: 640px !important;
+  border: 1px solid rgba(14, 33, 62, .10) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 1px 2px rgba(9, 24, 48, .05),
+    0 30px 80px -20px rgba(9, 24, 48, .35) !important;
+  overflow: hidden;
+}
+
+body.app-locked .login-hero {
+  display: block !important;
+  position: relative;
+  padding: 0 !important;
+  overflow: hidden;
+  background: #151B26;
+}
+
+body.app-locked .login-hero>div:not(.marca-hero),
+body.app-locked .login-hero .project-grid {
+  display: none !important;
+}
+
+.marca-hero {
+  display: none;
+}
+
+body.app-locked .marca-hero {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.marca-hero-foto {
+  position: absolute;
+  inset: 0;
+  background-color: #151B26;
+  background-image: url("../img/login-fundo.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.marca-hero-veu {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 16, 31, .34) 0%, rgba(4, 16, 31, .04) 34%, rgba(4, 16, 31, .74) 78%, rgba(3, 12, 24, .94) 100%),
+    radial-gradient(120% 80% at 50% 40%, transparent 45%, rgba(3, 12, 24, .38) 100%);
+}
+
+.marca-assinatura {
+  position: absolute;
+  left: 40px;
+  right: 34px;
+  bottom: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.marca-assinatura-sigla {
+  color: #fff;
+  font-size: 58px;
+  font-weight: 950;
+  line-height: .84;
+  letter-spacing: -.035em;
+  text-shadow: 0 3px 26px rgba(0, 0, 0, .55);
+}
+
+.marca-assinatura-nome {
+  position: relative;
+  padding-top: 11px;
+  color: rgba(255, 255, 255, .93);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: .215em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, .6);
+}
+
+.marca-assinatura-nome::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54px;
+  height: 3px;
+  border-radius: 2px;
+  background: #1F6FB2;
+}
+
+body.app-locked .login-form {
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0 !important;
+  background: #fff;
+}
+
+body.app-locked .login-form>* {
+  width: min(340px, 100%);
+  margin-inline: auto;
+}
+
+.login-marca {
+  height: 74px;
+  width: min(250px, 100%);
+  margin: 0 auto 34px;
+  background: #fff var(--pp-logo-url) center center/contain no-repeat;
+}
+
+body.app-locked .login-field {
+  margin-bottom: 15px;
+}
+
+body.app-locked .login-field label {
+  color: #55637A;
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: .085em;
+  margin-bottom: 7px;
+}
+
+body.app-locked .login-field input {
+  border: 1px solid #DCE3ED;
+  border-radius: 11px;
+  padding: 13px 15px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #151B26;
+  background: #FAFBFC;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+body.app-locked .login-field input::placeholder {
+  color: #A9B4C4;
+  font-weight: 650;
+}
+
+body.app-locked .login-field input:focus {
+  background: #fff;
+  border-color: #1F6FB2;
+  box-shadow: 0 0 0 3px rgba(31,111,178, .13);
+}
+
+body.app-locked .login-submit {
+  margin-top: 9px;
+  border-radius: 11px;
+  padding: 14px 16px;
+  background: #1F6FB2;
+  font-size: 12.5px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  box-shadow: none;
+  transition: background .15s ease, transform .12s ease, opacity .15s ease;
+}
+
+body.app-locked .login-submit:disabled {
+  opacity: .62;
+  cursor: progress;
+}
+
+body.app-locked .login-submit:hover:not(:disabled) {
+  background: #1F6FB2;
+  transform: translateY(-1px);
+}
+
+body.app-locked .login-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+body.app-locked .login-error {
+  margin-top: 10px;
+  text-align: left;
+  font-size: 11.5px;
+}
+
+body.app-locked .login-submit[data-ocupado="1"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: .62;
+  background: #9C3700;
+  color: rgba(255, 255, 255, .82);
+  cursor: progress;
+  transform: translateY(2px);
+  box-shadow: inset 0 3px 9px rgba(0, 0, 0, .42);
+  filter: saturate(.75);
+  transition: opacity .12s ease, background .12s ease, transform .12s ease;
+}
+
+body.app-locked .login-submit[data-ocupado="1"]:hover,
+body.app-locked .login-submit[data-ocupado="1"]:focus {
+  background: #9C3700;
+  opacity: .62;
+  transform: translateY(2px);
+}
+
+.marca-rodinha {
+  display: none;
+}
+
+body.app-locked .login-submit[data-ocupado="1"] .marca-rodinha {
+  display: block;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  border: 2px solid rgba(255, 255, 255, .34);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: marca-girar .7s linear infinite;
+}
+
+@keyframes marca-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.app-locked .login-submit[data-ocupado="1"] .marca-rodinha {
+    animation: marca-pulsar 1.1s ease-in-out infinite;
+    border-top-color: rgba(255, 255, 255, .34);
+  }
+
+  @keyframes marca-pulsar {
+    50% {
+      opacity: .25;
+    }
+  }
+}
+
+.marca-creditos {
+  display: none;
+}
+
+body.app-locked .marca-creditos {
+  display: block;
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  z-index: 4;
+}
+
+.marca-creditos-btn {
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  border: 1px solid #DFE5EE;
+  border-radius: 50%;
+  background: #fff;
+  color: #A9B4C4;
+  font: 900 11px/1 Segoe UI, Arial, sans-serif;
+  cursor: help;
+  transition: color .15s ease, border-color .15s ease;
+}
+
+.marca-creditos-btn:hover,
+.marca-creditos-btn:focus-visible {
+  color: #1F6FB2;
+  border-color: #F3C4A3;
+  outline: none;
+}
+
+.marca-creditos-balao {
+  position: absolute;
+  right: 0;
+  bottom: 29px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: max-content;
+  max-width: 200px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #151B26;
+  color: #EAF1FA;
+  font: 700 11px/1.35 Segoe UI, Arial, sans-serif;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(9, 24, 48, .22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity .16s ease, transform .16s ease, visibility .16s;
+  pointer-events: none;
+}
+
+.marca-creditos-balao em {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 9.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  opacity: .62;
+  margin-bottom: 3px;
+}
+
+.marca-creditos-balao b {
+  font-weight: 800;
+  font-size: 11.5px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marca-creditos-balao i {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 9.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .55;
+  margin-top: 4px;
+}
+
+.marca-creditos-balao::after {
+  content: "";
+  position: absolute;
+  right: 7px;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  background: #151B26;
+  transform: rotate(45deg);
+}
+
+.marca-creditos:hover .marca-creditos-balao,
+.marca-creditos-btn:focus-visible+.marca-creditos-balao {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+body.app-locked .login-card {
+  position: relative;
+}
+
+@media (max-width:880px) {
+  body.app-locked .login-card {
+    grid-template-columns: 1fr !important;
+    width: min(430px, 94vw) !important;
+    max-width: min(430px, 94vw) !important;
+    min-height: auto !important;
+  }
+
+  body.app-locked .login-hero {
+    height: 190px;
+  }
+
+  body.app-locked .login-form {
+    padding: 30px 26px !important;
+  }
+
+  body.app-locked .login-form>* {
+    width: 100%;
+  }
+
+  .marca-assinatura {
+    left: 26px;
+    bottom: 22px;
+  }
+
+  .marca-assinatura-sigla {
+    font-size: 40px;
+  }
+
+  .marca-assinatura-nome {
+    font-size: 10.5px;
+    letter-spacing: .17em;
+  }
+}
+
+.picker-legado {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+
+#projectPickerBg .login-card {
+  grid-template-columns: 1fr !important;
+  width: min(760px, 95vw) !important;
+  max-width: min(760px, 95vw) !important;
+  min-height: 0 !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(14, 33, 62, .10) !important;
+  box-shadow:
+    0 1px 2px rgba(9, 24, 48, .05),
+    0 30px 80px -20px rgba(9, 24, 48, .35) !important;
+}
+
+#projectPickerBg .login-hero {
+  padding: 30px 30px 22px !important;
+  gap: 22px !important;
+  background: linear-gradient(165deg, #0B2748 0%, #151B26 55%, #06192F 100%) !important;
+}
+
+#projectPickerBg .picker-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+#projectPickerBg .login-logo {
+  width: 168px;
+  height: 40px;
+  border-radius: 9px;
+  box-shadow: none;
+  flex: 0 0 auto;
+}
+
+#projectPickerBg .picker-saudacao {
+  color: rgba(255, 255, 255, .80);
+  font-size: 11.5px;
+  font-weight: 850;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 1.3;
+}
+
+#projectPickerBg .project-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 9px !important;
+}
+
+#projectPickerBg .project-tile {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  min-height: 52px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  background: rgba(255, 255, 255, .05);
+  color: rgba(255, 255, 255, .92);
+  text-align: left;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .12s ease;
+}
+
+#projectPickerBg .project-tile b {
+  display: block;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#projectPickerBg .project-tile.executivo {
+  grid-column: 1 / -1;
+  background: linear-gradient(100deg, #1F6FB2, #1F6FB2);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px -6px rgba(31,111,178, .55);
+}
+
+#projectPickerBg .project-tile.executivo span::after {
+  content: none !important;
+}
+
+#projectPickerBg .project-tile:hover {
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .28);
+  transform: translateY(-1px);
+}
+
+#projectPickerBg .project-tile.executivo:hover {
+  background: linear-gradient(100deg, #1F6FB2, #1F6FB2);
+  border-color: transparent;
+}
+
+#projectPickerBg .project-tile.active {
+  background: rgba(255, 255, 255, .14);
+  border-color: rgba(255, 255, 255, .34);
+}
+
+#projectPickerBg .project-tile.executivo.active {
+  background: linear-gradient(100deg, #1F6FB2, #1F6FB2);
+  border-color: transparent;
+}
+
+#projectPickerBg .picker-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, .10);
+  margin-top: 2px;
+}
+
+#projectPickerBg .picker-divisao {
+  color: rgba(255, 255, 255, .52);
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding-top: 10px;
+}
+
+#projectPickerBg .picker-sair {
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .20);
+  border-radius: 999px;
+  padding: 7px 18px;
+  color: rgba(255, 255, 255, .72);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+#projectPickerBg .picker-sair:hover {
+  background: rgba(255, 255, 255, .10);
+  border-color: rgba(255, 255, 255, .38);
+  color: #fff;
+}
+
+@media (max-width:640px) {
+  #projectPickerBg .project-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #projectPickerBg .picker-saudacao {
+    text-align: left;
+  }
+}
+
+.table {
+  height: 100% !important;
+}
+
+.table tbody tr:not(.pp-linha-espacadora) {
+  height: 19px;
+}
+
+.table tbody tr.pp-linha-espacadora td {
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  height: auto !important;
+}
+
+.table-wrap {
+  overflow: visible !important;
+  height: 100% !important;
+}
+
+.main>.panel,
+.right>.panel {
+  min-height: 0;
+}
+
+.right .panel-body,
+.main .panel-body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.right .chart-box {
+  height: 100% !important;
+  min-height: 0;
+}
+
+.dashboard,
+.dashboard *,
+#projectPickerBg,
+#projectPickerBg *,
+.login-screen,
+.login-screen *,
+.pp-global-rights,
+.current-project-pill,
+#authSplash,
+#authSplash *,
+#execLoadingOverlay,
+#execLoadingOverlay * {
+  cursor: default;
+}
+
+.dashboard button,
+.dashboard .btn,
+.dashboard a,
+.dashboard label,
+.dashboard select,
+.dashboard [onclick],
+.dashboard .pp-menu-btn,
+.dashboard .pp-sel-box,
+.dashboard .pp-sel-opt,
+.dashboard input[type=checkbox],
+.dashboard input[type=radio],
+#projectPickerBg button,
+#projectPickerBg [onclick],
+.login-screen button,
+.login-screen [onclick] {
+  cursor: pointer !important;
+}
+
+.dashboard input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=color]),
+.dashboard textarea,
+.login-screen input:not([type=checkbox]):not([type=radio]) {
+  cursor: text !important;
+}
+
+.marca-creditos-btn {
+  cursor: help !important;
+}
+
+.pp-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.pp-cal-nav button {
+  padding: 2px 9px;
+  font-size: 13px;
+  line-height: 1.2;
+  box-shadow: none;
+}
+
+#ppCalTitulo {
+  font-size: 11px;
+  font-weight: 950;
+  color: var(--navy2, #151B26);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.pp-cal-grade {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.pp-cal-dow {
+  text-align: center;
+  font-size: 8.5px;
+  font-weight: 950;
+  color: #99A1AC;
+  padding-bottom: 2px;
+}
+
+.pp-cal-vago {
+  height: 22px;
+}
+
+.pp-cal-dia {
+  height: 22px;
+  border: 1px solid #E3E6EA;
+  border-radius: 5px;
+  background: #fff;
+  color: #67707C;
+  font-size: 9.5px;
+  font-weight: 900;
+  padding: 0;
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+
+.pp-cal-dia:hover {
+  border-color: #CDD2D9;
+  background: #F7F8FA;
+}
+
+.pp-cal-dia.e-fimsemana {
+  background: #F2F3F5;
+  color: #99A1AC;
+}
+
+.pp-cal-dia.e-util {
+  background: #E7F6EC;
+  border-color: #1E8A4C;
+  color: #0B5F3A;
+}
+
+.pp-cal-dia.e-fds {
+  background: #FFF1E5;
+  border-color: #1F6FB2;
+  color: #185A92;
+}
+
+.pp-cal-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 8px;
+  align-items: end;
+}
+
+.pp-cal-campos .field label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pp-cal-campos .field input {
+  width: 100%;
+  text-align: center;
+}
+
+.pp-cal-dow {
+  line-height: 1;
+}
+
+.pp-regra-linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  margin: 0 0 4px;
+  border: 1px solid #E3E6EA;
+  border-radius: 8px;
+  background: #F7F8FA;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  color: #3F4752;
+  line-height: 1.25;
+}
+
+.pp-regra-linha:hover {
+  border-color: #CDD2D9;
+  background: #F2F3F5;
+}
+
+.pp-regra-linha input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  margin: 0;
+  accent-color: #1F6FB2;
+  cursor: pointer;
+}
+
+.pp-regra-valor {
+  margin: 0 0 8px;
+  padding-left: 23px;
+}
+
+.pp-regra-valor input {
+  width: 100%;
+}
+
+.pp-regra-valor input:disabled {
+  background: #F2F3F5;
+  color: #99A1AC;
+  cursor: not-allowed;
+}
+
+.pp-hist-aviso {
+  margin-top: 6px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  background: #E7F0F9;
+  border: 1px solid #FFD9B8;
+  color: #185A92;
+  font-size: 9.4px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.pp-cal-resumo {
+  margin-top: 8px;
+  border-top: 1px solid #E9ECF0;
+  padding-top: 6px;
+}
+
+.pp-cal-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 9.6px;
+  font-weight: 800;
+  color: #67707C;
+  padding: 2px 0;
+}
+
+.pp-cal-linha b {
+  color: var(--navy2, #151B26);
+  font-variant-numeric: tabular-nums;
+}
+
+.pp-cal-linha.destaque {
+  font-size: 10.4px;
+  color: #3F4752;
+}
+
+.pp-cal-linha.destaque b {
+  color: #1F6FB2;
+  font-weight: 950;
+}
+
+.pp-load-torre {
+  width: 44px;
+  height: 56px;
+  color: #E0A100;
+  display: block;
+  margin: 0 auto 2px;
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, .45));
+  animation: aneEnergiza 1.6s ease-in-out infinite;
+}
+
+@keyframes aneEnergiza {
+
+  0%,
+  100% {
+    opacity: .55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.pp-load-divisao {
+  color: #FFB870;
+  font: 900 10px/1 Segoe UI, Arial, sans-serif;
+  letter-spacing: .215em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-load-torre {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.kpis {
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+}
+
+.kpi {
+  padding: 7px 8px !important;
+  min-width: 0 !important;
+}
+
+.kpi .value {
+  font-size: clamp(12.5px, .82vw, 16.5px) !important;
+  white-space: nowrap !important;
+  letter-spacing: -.2px;
+}
+
+.kpi .label,
+.kpi .kpi-title {
+  font-size: clamp(8px, .52vw, 9.5px) !important;
+  letter-spacing: .02em;
+}
+
+.kpi .sub,
+.kpi .kpi-foot,
+.kpi small {
+  font-size: clamp(7.4px, .48vw, 8.8px) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1200px) {
+  .kpis {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .login-marca {
+    height: 58px;
+    width: min(200px, 100%);
+    margin-bottom: 26px;
+  }
+}

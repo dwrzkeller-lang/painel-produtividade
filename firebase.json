@@ -1,0 +1,43 @@
+{
+  "hosting": {
+    "comment": "public aponta para dist/ (build minificado). O predeploy roda `npm run build` AUTOMATICAMENTE antes de todo deploy de hosting, entao e impossivel publicar um dist desatualizado: mesmo trocando de maquina. O codigo-fonte legivel fica na raiz; so o dist/ vai ao ar.",
+    "predeploy": ["npm run build"],
+    "public": "dist",
+    "ignore": [
+      "**/.*"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/painel.html"
+      }
+    ],
+    "headers": [
+      {
+        "comment": "Headers de SEGURANCA para TODAS as respostas (sem Cache-Control aqui, para nao conflitar com as regras de cache abaixo: no Hosting, blocos que casam a mesma URL sao mesclados e evitar definir a mesma chave duas vezes remove qualquer ambiguidade de precedencia).",
+        "source": "**",
+        "headers": [
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+          { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
+          { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+          { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(self)" },
+          { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://firebaseinstallations.googleapis.com; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" }
+        ]
+      },
+      {
+        "comment": "Cache-Control por tipo. Assets (js/css/img/fontes) NAO tem hash no nome. Usamos max-age curto (300s = 5 min): dentro da janela o navegador reusa do cache LOCAL sem request nenhum (F5 rapido); passada a janela, revalida. Um deploy chega ao usuario em no maximo 5 min: sem risco de ficar preso a codigo velho como aconteceria com cache imutavel. (Nao usamos 'no-cache' puro porque o Hosting nao respondeu 304 ao If-None-Match nos testes, entao ele nao economizava banda.)",
+        "source": "**/*.@(js|css|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }]
+      },
+      {
+        "comment": "HTML (ponto de entrada, muda a cada deploy): no-store, sempre do zero.",
+        "source": "**/*.html",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}

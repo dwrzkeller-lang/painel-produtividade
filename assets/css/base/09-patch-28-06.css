@@ -1,0 +1,177 @@
+    :root {
+      --pp-logo-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 80' role='img' aria-label='Painel de Produtividade'%3E%3Cg transform='translate(4 12) scale(1.75)'%3E%3Crect x='5' y='17' width='5' height='9' fill='%2317191C'/%3E%3Crect x='13.5' y='12' width='5' height='14' fill='%2317191C'/%3E%3Crect x='22' y='6' width='5' height='20' fill='%23E8590C'/%3E%3Crect x='3' y='27.5' width='26' height='1.5' fill='%2317191C'/%3E%3C/g%3E%3Ctext x='72' y='51' font-family='Inter, Segoe UI, Arial, sans-serif' font-size='25' font-weight='650' letter-spacing='-.3' fill='%2317191C'%3EPainel de Produtividade%3C/text%3E%3C/svg%3E");
+      --pp-logo-claro-url: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 80' role='img' aria-label='Painel de Produtividade'%3E%3Cg transform='translate(4 12) scale(1.75)'%3E%3Crect x='5' y='17' width='5' height='9' fill='%23FFFFFF'/%3E%3Crect x='13.5' y='12' width='5' height='14' fill='%23FFFFFF'/%3E%3Crect x='22' y='6' width='5' height='20' fill='%23E8590C'/%3E%3Crect x='3' y='27.5' width='26' height='1.5' fill='%23FFFFFF'/%3E%3C/g%3E%3Ctext x='72' y='51' font-family='Inter, Segoe UI, Arial, sans-serif' font-size='25' font-weight='650' letter-spacing='-.3' fill='%23FFFFFF'%3EPainel de Produtividade%3C/text%3E%3C/svg%3E");
+    }
+
+    .logo-marca,
+    .login-logo {
+      background: #fff var(--pp-logo-url) center/contain no-repeat !important;
+      color: transparent !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .logo-marca span,
+    .login-logo span {
+      display: none !important;
+    }
+
+    .logo-marca {
+      width: 205px !important;
+      min-width: 205px !important;
+      height: 38px !important;
+      border-radius: 12px !important;
+    }
+
+    .login-logo {
+      width: 270px !important;
+      height: 58px !important;
+      border-radius: 14px !important;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .15) !important;
+    }
+
+    .exec-shell-bar {
+      height: 46px !important;
+      min-height: 46px !important;
+      border-radius: 12px !important;
+    }
+
+    .exec-shell-title {
+      font-size: 14px !important;
+      letter-spacing: .045em !important;
+    }
+
+    .executive-frame {
+      margin-top: 6px !important;
+    }
+
+    .modal {
+      width: min(1540px, 98.5vw) !important;
+      max-height: 96vh !important;
+      grid-template-rows: 44px minmax(0, 1fr) 50px !important;
+      border-radius: 16px !important;
+    }
+
+    .modal-body {
+      grid-template-columns: minmax(300px, 360px) minmax(0, 1fr) !important;
+      gap: 10px !important;
+      padding: 10px !important;
+      overflow: hidden !important;
+    }
+
+    .modal-body>aside {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      max-height: calc(96vh - 106px) !important;
+      padding-right: 4px !important;
+    }
+
+    .edit-wrap {
+      max-height: calc(96vh - 120px) !important;
+      overflow: auto !important;
+    }
+
+    .editor-card {
+      padding: 9px !important;
+      margin-bottom: 8px !important;
+      border-radius: 12px !important;
+    }
+
+    .editor-card h3 {
+      font-size: 12.5px !important;
+    }
+
+    .form-grid {
+      gap: 7px !important;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      padding: 8px 9px !important;
+      font-size: 12px !important;
+      border-radius: 9px !important;
+    }
+
+    .edit-table th,
+    .edit-table td {
+      font-size: 11.8px !important;
+      padding: 5px !important;
+    }
+
+    .edit-table input {
+      font-size: 11.8px !important;
+      padding: 6px !important;
+    }
+
+    .dashboard {
+      width: 100% !important;
+      min-width: 0 !important;
+      
+      grid-template-rows: 44px auto auto auto !important;
+    }
+
+    .main {
+      grid-template-columns: minmax(0, 3fr) minmax(320px, .95fr) !important;
+    }
+
+    .table th,
+    .table td {
+      font-size: 10.8px !important;
+      height: 24px !important;
+      padding: 4px 6px !important;
+    }
+
+    .table tfoot td {
+      font-size: 12px !important;
+      height: 30px !important;
+    }
+
+    .kpi .value {
+      font-size: 18px !important;
+    }
+
+    @media (max-width:1350px) {
+      .main {
+        grid-template-columns: 1fr !important;
+      }
+
+      .right {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: auto !important;
+      }
+
+      .bottom {
+        grid-template-columns: 1fr !important;
+      }
+
+      .modal-body {
+        grid-template-columns: 1fr !important;
+        overflow: auto !important;
+      }
+
+      .modal-body>aside {
+        max-height: none !important;
+      }
+    }
+
+    @media (max-width:900px) {
+      .logo-marca {
+        width: 170px !important;
+        min-width: 170px !important;
+      }
+
+      .titlebar-left {
+        min-width: 0 !important;
+      }
+
+      .title-date {
+        min-width: 0 !important;
+        display: none !important;
+      }
+
+      .titlebar-actions .btn {
+        font-size: 9px !important;
+        padding: 4px 7px !important;
+      }
+    }

@@ -1,0 +1,23 @@
+{
+  "name": "painel-produtividade",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Painel de Produtividade: gestão de produção, metas e resultado financeiro por contrato. Site estático (HTML/CSS/JS) com nuvem Firebase ou modo demonstração.",
+  "type": "module",
+  "scripts": {
+    "demo": "node scripts/servidor-local.mjs",
+    "teste": "node scripts/teste-calculos.mjs",
+    "foto": "node scripts/foto-numeros.mjs",
+    "foto-gerencial": "node scripts/foto-gerencial.mjs",
+    "check": "node scripts/check-assets.mjs",
+    "build": "node scripts/build-min.mjs",
+    "backup": "node scripts/backup-firestore.mjs",
+    "gerar-dados": "node scripts/gerar-dados-ficticios.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0"
+  },
+  "devDependencies": {
+    "terser": "^5.49.0"
+  }
+}

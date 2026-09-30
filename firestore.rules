@@ -1,0 +1,131 @@
+rules_version = '2';
+
+// Regras de acesso do Painel de Produtividade (Cloud Firestore).
+// Perfis: admin (tudo) · controller/coordenador (editam os contratos vinculados)
+// · gerente/diretor/ceo (somente leitura). Todo usuário logado LÊ todos os
+// contratos, para que a diretoria veja os mesmos números que quem edita.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Funções auxiliares ──────────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function getCurrentUser() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    function myRole() {
+      return getCurrentUser().role;
+    }
+    function isAdmin() {
+      return isSignedIn() && myRole() == 'admin';
+    }
+    function temAcessoProjeto(projectId) {
+      return isSignedIn();
+    }
+    // Lista de contratos do usuário; campo ausente vale como lista vazia
+    // (a regra nega em vez de falhar).
+    function myProjectIds() {
+      return getCurrentUser().get('projectIds', []);
+    }
+    // Grava: admin, ou controller/coordenador com o contrato vinculado.
+    // Gerente, diretor e CEO nunca gravam: a interface só esconde os botões;
+    // esta checagem é a defesa real.
+    function podeSalvarProjeto(projectId) {
+      return isSignedIn() && (
+        isAdmin() ||
+        ((myRole() == 'controller' || myRole() == 'coordenador') && projectId in myProjectIds())
+      );
+    }
+
+    // ─── Usuários ────────────────────────────────────────────────────────
+    // Cada usuário lê o próprio perfil; só o admin cria, altera e exclui.
+    // Exceção estreita: o próprio usuário pode carimbar SOMENTE o horário do
+    // último acesso (nenhum campo de permissão).
+    match /users/{userId} {
+      allow read:   if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow create: if isAdmin();
+      allow update: if isAdmin()
+        || (isSignedIn() && request.auth.uid == userId
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['ultimoAcessoMs','ultimoAcessoISO','acessosTotal']));
+      allow delete: if isAdmin();
+    }
+
+    // ─── Contratos ───────────────────────────────────────────────────────
+    // Apagar um documento inteiro (contrato, mês de histórico, importações,
+    // fotos) é exclusivo do admin: o painel nunca faz isso pela interface.
+    match /painel_produtividade/base/projects/{projectId} {
+      allow read:           if temAcessoProjeto(projectId);
+      allow create, update: if podeSalvarProjeto(projectId);
+      allow delete:         if isAdmin();
+
+      // Histórico diário, um documento por mês (YYYY-MM).
+      match /history/{month} {
+        allow read:           if temAcessoProjeto(projectId);
+        allow create, update: if podeSalvarProjeto(projectId);
+        allow delete:         if isAdmin();
+      }
+      // Registro das planilhas importadas, por mês.
+      match /imports/{month} {
+        allow read:           if temAcessoProjeto(projectId);
+        allow create, update: if podeSalvarProjeto(projectId);
+        allow delete:         if isAdmin();
+      }
+      // Fotos dos cartões de equipe.
+      match /media/{doc} {
+        allow read:           if temAcessoProjeto(projectId);
+        allow create, update: if podeSalvarProjeto(projectId);
+        allow delete:         if isAdmin();
+      }
+    }
+
+    // ─── Log de edições (auditoria, só acrescenta) ───────────────────────
+    // O autor gravado tem de ser o próprio usuário, e só registra quem pode
+    // editar aquele contrato.
+    match /painel_produtividade/base/editLog/{entryId} {
+      allow read:   if isAdmin();
+      allow create: if isSignedIn()
+        && request.resource.data.user == request.auth.token.email
+        && request.resource.data.keys().hasOnly(['projectId','projectName','user','role','at','atMs'])
+        && podeSalvarProjeto(request.resource.data.projectId);
+      allow update, delete: if isAdmin();
+    }
+
+    // ─── Histórico de acessos ────────────────────────────────────────────
+    // Um documento por sessão; e-mail e uid gravados precisam ser os do
+    // próprio usuário, e a autoria não pode ser trocada depois.
+    match /painel_produtividade/base/accessLog/{entryId} {
+      allow read:   if isAdmin();
+      allow create: if isSignedIn()
+        && request.resource.data.user == request.auth.token.email
+        && request.resource.data.uid == request.auth.uid;
+      allow update: if isSignedIn()
+        && request.auth.uid == resource.data.uid
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.user == resource.data.user;
+      allow delete: if isAdmin();
+    }
+
+    // ─── Presença (quem está online) ─────────────────────────────────────
+    match /painel_produtividade/base/presence/{uid} {
+      allow read:  if isAdmin();
+      allow write: if isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ─── Cópias de segurança do código: só admin ────────────────────────
+    match /pp_backups_html/{backupId} {
+      allow read, write: if isAdmin();
+      match /chunks/{chunkId} {
+        allow read, write: if isAdmin();
+      }
+    }
+
+    // ─── Demais documentos raiz ──────────────────────────────────────────
+    match /painel_produtividade/{doc} {
+      allow read:  if isSignedIn();
+      allow write: if isAdmin();
+    }
+  }
+}

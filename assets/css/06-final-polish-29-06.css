@@ -1,0 +1,171 @@
+    html,
+    body {
+      overflow-x: hidden !important;
+    }
+
+    body {
+      padding-bottom: 0 !important;
+    }
+
+    .pp-global-rights,
+    .login-rights {
+      display: none !important;
+    }
+
+    #ppFinalFooter,
+    .pp-final-footer {
+      position: static !important;
+      display: block !important;
+      width: 100% !important;
+      margin: 6px 0 0 !important;
+      padding: 8px 12px !important;
+      background: #F2F3F5 !important;
+      border-top: 1px solid #D8DCE2 !important;
+      color: #67707C !important;
+      font-size: 11px !important;
+      font-weight: 900 !important;
+      line-height: 1.25 !important;
+      text-align: center !important;
+      z-index: 1 !important;
+      pointer-events: none !important;
+    }
+
+    .actions {
+      position: static !important;
+      right: auto !important;
+      bottom: auto !important;
+      z-index: 5 !important;
+      display: flex !important;
+      justify-content: flex-end !important;
+      align-items: center !important;
+      gap: 8px !important;
+      flex-wrap: wrap !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 8px 12px !important;
+      background: #F2F3F5 !important;
+      border-top: 1px solid #D8DCE2 !important;
+      box-shadow: none !important;
+    }
+
+    .actions .btn {
+      box-shadow: 0 4px 12px rgba(22,27,36, .10) !important;
+    }
+
+    body.executive-mode .exec-shell-bar {
+      display: none !important;
+    }
+
+    body.executive-mode .executive-portal {
+      padding: 0 !important;
+      background: #F2F3F5 !important;
+    }
+
+    body.executive-mode .executive-frame {
+      margin-top: 0 !important;
+      border-radius: 0 !important;
+      height: 100% !important;
+      min-height: 100vh !important;
+    }
+
+    .table tfoot td {
+      overflow: visible !important;
+      text-overflow: clip !important;
+      white-space: nowrap !important;
+    }
+
+    .table tfoot td:nth-child(2) {
+      background: var(--navy) !important;
+      color: rgba(255, 255, 255, 1) !important;
+    }
+
+    #ppBankCard .editor-actions {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 7px !important;
+      margin-top: 6px !important;
+    }
+
+    #ppBankCard .editor-actions[style*="grid-template-columns:1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+
+    #ppBankCard .editor-actions .btn {
+      border-radius: 10px !important;
+      padding: 8px 6px !important;
+      font-size: 10.5px !important;
+      font-weight: 950 !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      box-shadow: none !important;
+      white-space: normal !important;
+      line-height: 1.2 !important;
+    }
+
+    #ppBankCard .btn-green {
+      background: #E2F3E8 !important;
+      color: #1E8A4C !important;
+      border: 1px solid #BFE3CC !important;
+    }
+
+    #ppBankCard .btn-white {
+      background: #fff !important;
+      color: #161B24 !important;
+      border: 1px solid #D8DCE2 !important;
+    }
+
+    #ppBankCard .btn-red {
+      background: #FCE7E3 !important;
+      color: #D0402B !important;
+      border: 1px solid #F5C4BA !important;
+    }
+
+    #ppBankCard .btn-navy {
+      background: #161B24 !important;
+      color: #fff !important;
+      border: none !important;
+    }
+
+    .status-line span {
+      text-transform: uppercase !important;
+    }
+
+    .panel,
+    .kpi,
+    .btn,
+    .project-tile,
+    .editor-card,
+    .side-card {
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease !important;
+    }
+
+    .panel:hover,
+    .kpi:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 8px 24px rgba(22,27,36, .13) !important;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px) !important;
+      filter: brightness(1.03) !important;
+    }
+
+    .table tbody tr:hover td {
+      background: #E7F0F9 !important;
+    }
+
+    #statusThresholdEditor .field input,
+    #businessDaysEditor .field input {
+      font-variant-numeric: tabular-nums !important;
+    }
+
+    .pp-mini-note {
+      font-size: 9.8px !important;
+      font-weight: 850 !important;
+      color: #67707C !important;
+      line-height: 1.35 !important;
+      margin: 6px 0 0 !important;
+    }

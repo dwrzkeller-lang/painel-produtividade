@@ -1,0 +1,265 @@
+/* ═══ IDENTIDADE ═════════════════════════════════════════════════════════════
+   Última camada visual do painel. Só aparência, nenhuma conta.
+   Regras da casa: tudo quadrado (campos, botões, fichas, janelas), uma paleta
+   só em todas as telas, sem degradê e sem animação de entrada.
+   Paleta: tinta #161B24 · azul #1F6FB2 · verde #1E8A4C · âmbar #E0A100 ·
+   vermelho #D0402B · cinzas neutros. O laranja #E8590C fica só na marca. */
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --orange: #1F6FB2;
+  --orange2: #E0A100;
+  --accent: #1F6FB2;
+  --navy: #161B24;
+  --navy2: #1B2433;
+  --green: #1E8A4C;
+  --red: #D0402B;
+  --purple: #3F4752;
+  --blue: #1F6FB2;
+  --bg: #F2F3F5;
+  --line: #D8DCE2;
+  --muted: #67707C;
+  --pa-fundo: #0B0F18;
+  --pa-tinta: #1B1F24;
+  --pa-azul: #1F6FB2;
+  --pa-azul-escuro: #185A92;
+}
+
+/* ── Tudo quadrado ─────────────────────────────────────────────────── */
+/* Os dois :not(#…) dão peso de ID à regra, para ela vencer os arredondados
+   marcados como !important nas folhas antigas. */
+html body *:not(#pa-q1):not(#pa-q2),
+html body *:not(#pa-q1):not(#pa-q2)::before,
+html body *:not(#pa-q1):not(#pa-q2)::after { border-radius: 0 !important; }
+html body .marca-rodinha:not(#pa-q1):not(#pa-q2) { border-radius: 50% !important; }
+
+/* Sem animação de entrada; a tela aparece pronta */
+html body .dashboard, html body #projectPickerBg, html body .login-screen, html body .executive-portal,
+html body .modal-bg.open, html body .modal-bg.open > .modal, html body .capture-bg.open, html body .capture-bg.open > .capture-shell,
+html body .team-card-page.open, html body .all-team-card-page.open { animation: none !important; }
+html body .modal-bg.open { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+html body .pp-global-rights, html body .current-project-pill, html body .marca-creditos { display: none !important; }
+
+/* ── Fundo das telas de entrada (mesmo do painel de obras) ─────────── */
+.pa-fundo {
+  position: fixed; inset: -40px; pointer-events: none;
+  background: #0B0F18 url("../img/fundo-eletrico.svg") center 60%/cover no-repeat;
+  filter: blur(7px); transform: scale(1.04);
+}
+.pa-veu { position: fixed; inset: 0; background: rgba(8, 10, 16, .42); pointer-events: none; }
+
+/* ── Entrada ───────────────────────────────────────────────────────── */
+html body.app-locked #loginScreen.pa-entrada {
+  position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; align-items: center;
+  gap: 18px; padding: 24px 16px; background: var(--pa-fundo) !important; overflow-x: hidden; overflow-y: auto;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif; -webkit-font-smoothing: antialiased;
+}
+html body.auth-loading #loginScreen.pa-entrada { display: none !important; }
+#loginScreen .pa-cartao {
+  position: relative; z-index: 1; flex: 0 0 auto; margin: auto 0 0; width: min(380px, 100%); background: #FFFFFF;
+  color: var(--pa-tinta); padding: 30px 30px 24px; box-shadow: 0 18px 50px rgba(0, 0, 0, .35); text-align: left;
+}
+.pa-marca { display: flex; flex-direction: row; align-items: center; gap: 10px; font-size: 14px; font-weight: 650; letter-spacing: -.01em; line-height: 1.2; color: var(--pa-tinta); }
+.pa-simbolo { width: 26px; height: 26px; flex: 0 0 26px; }
+#loginScreen .pa-titulo { margin: 26px 0 18px; font-size: 22px; font-weight: 650; letter-spacing: -.02em; line-height: 1.2; color: var(--pa-tinta); text-transform: none; }
+#loginScreen .pa-form { display: flex; flex-direction: column; gap: 14px; }
+#loginScreen .pa-campo { display: flex; flex-direction: column; gap: 6px; margin: 0; }
+#loginScreen .pa-campo label { display: block; margin: 0; font-size: 12.5px; font-weight: 600; line-height: 1.2; text-transform: none; letter-spacing: 0; color: #3F4752; }
+#loginScreen .pa-campo input {
+  display: block; height: 40px; width: 100%; box-sizing: border-box; margin: 0; padding: 0 11px; font-family: inherit;
+  font-size: 14px; font-weight: 400; color: var(--pa-tinta); background: #FFFFFF; border: 1px solid #D8DCE2; outline: none; box-shadow: none;
+  -webkit-appearance: none; appearance: none;
+}
+#loginScreen .pa-campo input::placeholder { color: #757C86; opacity: 1; }
+#loginScreen .pa-campo input:focus { border-color: var(--pa-azul); box-shadow: 0 0 0 3px rgba(31, 111, 178, .15); }
+#loginScreen .pa-senha { position: relative; }
+#loginScreen .pa-senha input { padding-right: 42px; }
+#loginScreen .pa-senha-ver {
+  position: absolute; right: 1px; top: 1px; bottom: 1px; width: 40px; margin: 0; padding: 0; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: row; align-items: center; justify-content: center; color: #67707C;
+}
+#loginScreen .pa-senha-ver:hover { color: var(--pa-tinta); }
+#loginScreen .pa-senha-ver svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+#loginScreen .pa-entrar {
+  margin: 6px 0 0; height: 42px; width: 100%; padding: 0 12px; border: 0; cursor: pointer; background: var(--pa-azul); color: #FFFFFF;
+  font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none;
+  display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px;
+}
+#loginScreen .pa-entrar:hover:not(:disabled) { background: var(--pa-azul-escuro); }
+#loginScreen .pa-entrar:disabled { cursor: progress; opacity: .85; }
+#loginScreen .pa-entrar .marca-rodinha { width: 14px; height: 14px; border: 2px solid rgba(255, 255, 255, .35); border-top-color: #fff; animation: paGiro .8s linear infinite; }
+@keyframes paGiro { to { transform: rotate(360deg); } }
+#loginScreen .pa-erro { display: block; min-height: 18px; margin: 0; font-size: 12.5px; font-weight: 500; line-height: 1.45; color: #B3321F; overflow-wrap: anywhere; }
+#loginScreen .pa-erro.bom { color: #17703D; }
+#loginScreen .pa-restrito { margin-top: 8px; padding-top: 14px; border-top: 1px solid #E9ECF0; }
+#loginScreen .pa-esqueci {
+  display: inline-block; margin: 0; padding: 0; border: 0; background: none; font-family: inherit; font-size: 12px; line-height: 1.25;
+  color: #67707C; text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+}
+#loginScreen .pa-esqueci:hover { color: var(--pa-tinta); }
+#loginScreen .pa-rodape { position: relative; z-index: 1; flex: 0 0 auto; margin: 0 0 auto; font-size: 12px; line-height: 1.25; color: rgba(255, 255, 255, .6); text-align: center; }
+@media (max-width: 420px) { #loginScreen .pa-cartao { padding: 26px 22px 22px; } }
+@media (pointer: coarse) { #loginScreen .pa-campo input { font-size: 16px; } }
+
+/* ── Capas: ao abrir, depois de entrar e entre telas ───────────────── */
+html body .pa-capa {
+  position: fixed !important; inset: 0 !important; z-index: 99999 !important; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; background: var(--pa-fundo) !important;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #FFFFFF;
+}
+html body #authSplash.pa-capa.splash-hiding { opacity: 0; transition: opacity .28s ease; }
+.pa-capa-centro { position: relative; z-index: 1; width: calc(100% - 32px); max-width: 380px; text-align: center; }
+.pa-capa-marca { display: inline-flex; flex-direction: row; align-items: center; gap: 10px; color: #FFFFFF; font-size: 14px; font-weight: 650; letter-spacing: -.01em; line-height: 1.2; }
+.pa-capa-ola { margin-top: 18px; font-size: 22px; font-weight: 650; letter-spacing: -.02em; line-height: 1.25; color: #FFFFFF; }
+.pa-capa-ola:empty, .pa-capa-ola:not(:has(> :not(:empty))):empty { display: none; }
+.pa-capa-ola small { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; letter-spacing: 0; color: rgba(255, 255, 255, .62); }
+.pa-capa-ola small:empty { display: none; }
+.pa-capa-barra { position: relative; max-width: 240px; height: 2px; margin: 22px auto 10px; background: rgba(255, 255, 255, .16); overflow: hidden; }
+.pa-capa-barra i { position: absolute; top: 0; bottom: 0; width: 34%; background: #FFFFFF; animation: paCarga 1.1s ease-in-out infinite; }
+@keyframes paCarga { from { left: -34%; } to { left: 100%; } }
+@media (prefers-reduced-motion: reduce) { .pa-capa-barra i { animation: none; left: 0; width: 100%; opacity: .5; } }
+.pa-capa-passo { font-size: 12px; color: rgba(255, 255, 255, .6); min-height: 16px; }
+
+/* ── Escolha de contratos ──────────────────────────────────────────── */
+html body #projectPickerBg.pa-inicio {
+  position: fixed !important; inset: 0 !important; z-index: 310 !important; flex-direction: column !important;
+  align-items: center !important; justify-content: flex-start !important; padding: 24px 16px !important;
+  overflow-x: hidden !important; overflow-y: auto !important; background: var(--pa-fundo) !important;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif; -webkit-font-smoothing: antialiased; color: var(--pa-tinta);
+}
+html body #projectPickerBg .pa-legado { display: none !important; }
+.pa-inicio-janela {
+  position: relative; z-index: 1; width: min(920px, 100%); margin: auto 0; background: #FFFFFF;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .35); padding: 22px 26px 26px;
+}
+.pa-inicio-topo { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid #E9ECF0; }
+.pa-inicio-usuario { display: flex; flex-direction: row; align-items: center; gap: 12px; font-size: 12.5px; color: #67707C; }
+.pa-inicio-usuario b { color: var(--pa-tinta); font-weight: 600; }
+.pa-botao-linha { height: 30px; padding: 0 12px; border: 1px solid #D8DCE2; background: #FFFFFF; color: #3F4752; font: 600 12.5px/1 "Inter", "Segoe UI", Arial, sans-serif; cursor: pointer; }
+.pa-botao-linha:hover { border-color: var(--pa-azul); color: var(--pa-azul); }
+.pa-inicio-cabeca { padding: 20px 0 16px; }
+.pa-inicio-ola { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -.02em; line-height: 1.2; color: var(--pa-tinta); }
+.pa-inicio-data { margin: 4px 0 0; font-size: 13px; color: #67707C; }
+.pa-inicio-conteudo { display: flex; flex-direction: column; gap: 14px; }
+
+.pa-gerencial {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; width: 100%; padding: 16px 18px;
+  border: 0; background: #161B24; color: #FFFFFF; text-align: left; cursor: pointer; font-family: inherit;
+}
+.pa-gerencial:hover { background: #1B2433; }
+.pa-gerencial:focus-visible { outline: 2px solid var(--pa-azul); outline-offset: 2px; }
+.pa-gerencial-icone { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--pa-azul); }
+.pa-gerencial-icone svg { width: 20px; height: 20px; fill: none; stroke: #FFFFFF; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pa-gerencial b { display: block; font-size: 15px; font-weight: 650; letter-spacing: -.01em; }
+.pa-gerencial small { display: block; margin-top: 3px; font-size: 12.5px; color: rgba(255, 255, 255, .66); }
+.pa-gerencial-ir { font-size: 12.5px; font-weight: 600; color: #FFFFFF; white-space: nowrap; }
+
+.pa-secao-rotulo { display: flex; flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 4px; }
+.pa-secao-rotulo b { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #67707C; }
+.pa-secao-rotulo span { font-size: 12px; color: #99A1AC; }
+.pa-contratos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pa-contrato {
+  position: relative; display: flex; flex-direction: column; gap: 12px; padding: 16px 16px 14px; text-align: left; cursor: pointer;
+  background: #FFFFFF; border: 1px solid #D8DCE2; border-top: 3px solid #D8DCE2; font-family: inherit; color: var(--pa-tinta);
+}
+.pa-contrato:hover { border-color: var(--pa-azul); box-shadow: 0 6px 18px rgba(16, 24, 40, .10); }
+.pa-contrato:focus-visible { outline: 2px solid var(--pa-azul); outline-offset: 2px; }
+.pa-contrato.st-ok { border-top-color: #1E8A4C; }
+.pa-contrato.st-att { border-top-color: #E0A100; }
+.pa-contrato.st-alr { border-top-color: #D0402B; }
+.pa-contrato-topo { display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.pa-contrato-nome b { display: block; font-size: 15px; font-weight: 650; letter-spacing: -.01em; }
+.pa-contrato-nome small { display: block; margin-top: 3px; font-size: 12px; color: #67707C; }
+.pa-ficha { display: inline-flex; align-items: center; height: 20px; padding: 0 7px; font-size: 10.5px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; background: #F2F3F5; color: #3F4752; }
+.pa-ficha.st-ok { background: #E2F3E8; color: #17703D; }
+.pa-ficha.st-att { background: #FFF3D2; color: #8A5D00; }
+.pa-ficha.st-alr { background: #FCE7E3; color: #B3321F; }
+.pa-numeros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.pa-numeros small { display: block; font-size: 11px; font-weight: 600; color: #67707C; }
+.pa-numeros b { display: block; margin-top: 3px; font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pa-pos { color: #17703D; } .pa-neg { color: #B3321F; }
+.pa-medidor { position: relative; height: 6px; background: #E9ECF0; }
+.pa-medidor i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--pa-azul); }
+.pa-medidor.st-ok i { background: #1E8A4C; } .pa-medidor.st-att i { background: #E0A100; } .pa-medidor.st-alr i { background: #D0402B; }
+.pa-medidor em { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: #161B24; }
+.pa-medidor-legenda { display: flex; flex-direction: row; justify-content: space-between; gap: 10px; margin-top: 6px; font-size: 11.5px; color: #67707C; }
+.pa-ritmo { display: flex; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 10px; }
+.pa-ritmo svg { flex: 1 1 auto; height: 30px; min-width: 0; }
+.pa-ritmo path { fill: none; stroke: var(--pa-azul); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.pa-ritmo path.pa-area { fill: rgba(31, 111, 178, .10); stroke: none; }
+.pa-ritmo span { font-size: 11.5px; color: #99A1AC; white-space: nowrap; }
+.pa-abrir { font-size: 12.5px; font-weight: 600; color: var(--pa-azul); white-space: nowrap; }
+.pa-esqueleto { display: block; height: 10px; background: #E9ECF0; }
+.pa-contrato.pa-esperando { cursor: default; }
+.pa-rodape-inicio { display: flex; flex-direction: row; justify-content: space-between; gap: 12px; margin-top: 4px; padding-top: 14px; border-top: 1px solid #E9ECF0; font-size: 12px; color: #99A1AC; }
+@media (max-width: 720px) {
+  .pa-inicio-janela { padding: 18px 16px 20px; }
+  .pa-contratos { grid-template-columns: minmax(0, 1fr); }
+  .pa-gerencial { grid-template-columns: auto minmax(0, 1fr); }
+  .pa-gerencial-ir { display: none; }
+  .pa-inicio-usuario span { display: none; }
+}
+
+/* ── Painel do contrato: mesmo arranjo, paleta e cantos novos ──────── */
+html body .titlebar, html body .tc-page-header { background: #161B24 !important; background-image: none !important; }
+html body .titlebar .logo-marca { background-color: #FFFFFF !important; }
+html body .panel-head { background-image: none !important; }
+html body .btn { background-image: none !important; }
+html body .kpi .icon { background-image: none !important; box-shadow: none !important; }
+html body .badge { background-image: none !important; }
+/* A administração abre pelo botão do topo da tela inicial; o botão flutuante
+   cobria tabelas e gráficos no canto da tela. */
+html body #adminEntryBtn { display: none !important; }
+
+/* Distribuição de status: a rosca cede espaço para "9 equipes" caber inteiro */
+html body .status-box { grid-template-columns: minmax(96px, 140px) minmax(0, 1fr); }
+html body .status-line b { white-space: nowrap; }
+html body #adminPanelBg .adm-topo { background: #161B24 !important; background-image: none !important; }
+@media (max-width: 520px) {
+  .pa-numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 8px; }
+}
+/* Os valores não quebram linha: quando o card fica estreito (telas de ~720 a
+   1100 px, dois cards por linha), três colunas não cabem e os números se
+   sobrepunham. A regra olha a largura do próprio card, não a da tela. */
+.pa-contrato { container-type: inline-size; }
+@container (max-width: 460px) {
+  .pa-numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 8px; }
+}
+.pa-numeros > div { min-width: 0; }
+.pa-numeros b { overflow: hidden; text-overflow: ellipsis; }
+
+/* Notebook entre 901 e 1350 px de largura (ex.: 1280): os blocos empilhados
+   ficavam presos à altura da tela, a tabela mostrava 4 equipes e o ranking
+   virava uma linha. Nessa faixa a página cresce e rola: tabela inteira,
+   ranking ao lado da distribuição de status, três gráficos embaixo. */
+@media (min-width: 901px) and (max-width: 1350px) {
+  html body .dashboard { height: auto !important; min-height: 100vh; grid-template-rows: none !important; grid-auto-rows: auto !important; }
+  html body .dashboard > .main { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: none !important; grid-auto-rows: auto !important; height: auto !important; }
+  html body .dashboard > .main > .pp-team-filter-panel { height: auto !important; max-height: none !important; }
+  html body .dashboard > .main > .pp-team-filter-panel .panel-body,
+  html body .dashboard > .main > .pp-team-filter-panel .table-wrap { height: auto !important; max-height: none !important; }
+  html body .dashboard > .main > .right { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; grid-template-rows: 300px !important; height: auto !important; }
+  html body .dashboard > .bottom { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(260px, .65fr) !important; grid-template-rows: 340px !important; height: auto !important; }
+}
+
+/* Linha TOTAL GERAL com valores na casa dos milhões: sem o espaçamento extra
+   entre letras, o valor cabe inteiro na coluna em qualquer largura. */
+html body .dashboard #mainTable tfoot td { letter-spacing: 0 !important; padding-left: 4px !important; padding-right: 4px !important; }
+/* Título do contrato inteiro em telas de 901 a 1180 px */
+@media (min-width: 901px) and (max-width: 1180px) {
+  html body .dashboard .titlebar .title-text { font-size: 16px !important; letter-spacing: .2px !important; }
+}
+
+/* Seis indicadores no topo do painel: 6 numa linha, 3 + 3 no notebook,
+   2 por linha no celular e 1 em tela muito estreita. */
+html body .kpis#kpiGrid, html body #capKpis.kpis { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+@media (max-width: 1200px) { html body .kpis#kpiGrid, html body #capKpis.kpis { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
+@media (max-width: 900px) { html body .kpis#kpiGrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+@media (max-width: 430px) { html body .kpis#kpiGrid { grid-template-columns: minmax(0, 1fr) !important; } }

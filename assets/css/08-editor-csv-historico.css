@@ -1,0 +1,123 @@
+    .pp-mini-select {
+      border: 1px solid rgba(255, 255, 255, .42);
+      background: rgba(255, 255, 255, .16);
+      color: #fff;
+      border-radius: 9px;
+      padding: 3px 7px;
+      font-size: 9px;
+      font-weight: 950;
+      max-width: 150px;
+      height: 22px;
+      outline: none;
+    }
+
+    .pp-mini-select option {
+      color: #161B24;
+      background: #fff;
+    }
+
+    .panel-head .pp-head-tools {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    #modalBg .modal-body aside .editor-card p {
+      line-height: 1.25 !important;
+    }
+
+    #modalBg .modal-body aside .editor-card.pp-hidden-card {
+      display: none !important;
+    }
+
+    #ppFluxoEditorCard {
+      border-color: #8FB5DA !important;
+      background: linear-gradient(180deg, #E7F0F9, #FFFFFF) !important;
+    }
+
+    #ppFluxoEditorCard h3 {
+      color: #8A5D00 !important;
+    }
+
+    .pp-flow-steps {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin: 8px 0 9px;
+    }
+
+    .pp-flow-steps div {
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+      color: #3F4752;
+      font-size: 10.5px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+
+    .pp-flow-steps b {
+      min-width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #1F6FB2;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .pp-editor-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #E2F3E8;
+      color: #1E8A4C;
+      border: 1px solid #BFE3CC;
+      font-size: 9.5px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .pp-muted-mini {
+      color: #67707C;
+      font-size: 10px;
+      font-weight: 850;
+      line-height: 1.3;
+      margin: 7px 0 0;
+    }
+
+    #ppCsvBancoResumo .pp-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    #ppCsvBancoResumo .pp-mini-grid div {
+      background: #F7F8FA;
+      border: 1px solid #E3E6EA;
+      border-radius: 12px;
+      padding: 8px;
+    }
+
+    #ppCsvBancoResumo small {
+      display: block;
+      color: #67707C;
+      font-size: 9px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    #ppCsvBancoResumo b {
+      display: block;
+      color: #161B24;
+      font-size: 13px;
+      font-weight: 950;
+      margin-top: 3px;
+    }

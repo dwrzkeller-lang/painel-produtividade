@@ -1,0 +1,321 @@
+/* ═══ CARDS DE EQUIPE ═════════════════════════════════════════════════════════
+   Ficha de acompanhamento e resumo para a equipe de campo. Visual de
+   documento de trabalho: cabeçalho escuro, régua do mês e tabelas.
+   As cores do cabeçalho, do destaque e dos fundos vêm do editor de cores
+   do card (--tc-head-bg, --tc-accent, --tc-paper-bg, --tc-border-color). */
+
+html body .tc-paper,
+html body .atc-paper {
+  min-height: 0;
+  box-shadow: 0 1px 3px rgba(22, 27, 36, .10);
+}
+
+.fx {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  color: #161B24;
+  background: var(--tc-paper-bg, #F7F8FA);
+  padding-bottom: 18px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Cabeçalho */
+.fx-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 20px 24px 18px;
+  background: var(--tc-head-bg, #161B24);
+  color: #fff;
+  border-bottom: 4px solid var(--tc-accent, #1F6FB2);
+}
+.fx-topo-id small {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, .72);
+}
+.fx-topo-id strong {
+  display: block;
+  margin: 4px 0;
+  font-size: 40px;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.fx-topo-id span {
+  font-size: 14px;
+  color: rgba(255, 255, 255, .86);
+}
+.fx-topo-dir {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.fx-sit {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #fff;
+  background: #1E8A4C;
+}
+.fx-sit.fx-st-att { background: #E0A100; color: #161B24; }
+.fx-sit.fx-st-alr { background: #D0402B; }
+.fx-ref { text-align: right; }
+.fx-ref small {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: rgba(255, 255, 255, .65);
+}
+.fx-ref b {
+  font-size: 20px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Régua do mês */
+.fx-avanco {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  margin: 16px 24px 0;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid var(--tc-border-color, #D8DCE2);
+}
+.fx-avanco-num b {
+  display: block;
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #1E8A4C;
+}
+.fx-avanco-num b.fx-st-att { color: #A87800; }
+.fx-avanco-num b.fx-st-alr { color: #D0402B; }
+.fx-avanco-num span { font-size: 12px; color: #67707C; }
+.fx-regua {
+  position: relative;
+  height: 14px;
+  background: #E9ECF0;
+}
+.fx-regua span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #1E8A4C;
+}
+.fx-regua.fx-st-att span { background: #E0A100; }
+.fx-regua.fx-st-alr span { background: #D0402B; }
+.fx-regua i {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: #161B24;
+}
+.fx-avanco-leg {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #67707C;
+}
+.fx-avanco-leg span:first-child { color: #161B24; font-weight: 600; }
+
+/* Blocos com título */
+.fx-grade {
+  display: grid;
+  grid-template-columns: 450px minmax(0, 1fr);
+  gap: 16px;
+  margin: 16px 24px 0;
+}
+.fx-grade-baixo { grid-template-columns: 1fr 1fr; }
+.fx-oper .fx-grade { grid-template-columns: 380px minmax(0, 1fr); }
+.fx-bloco {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid var(--tc-border-color, #D8DCE2);
+}
+.fx-bloco h3 {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #161B24;
+  background: #F7F8FA;
+  border-bottom: 2px solid var(--tc-accent, #1F6FB2);
+}
+
+/* Tabelas */
+.fx-tab {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.fx-tab th,
+.fx-tab td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #EDEFF2;
+}
+.fx-tab th {
+  text-align: left;
+  font-weight: 500;
+  color: #3F4752;
+  white-space: nowrap;
+}
+.fx-tab td {
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.fx-tab td.fx-obs {
+  padding-left: 4px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  color: #67707C;
+  white-space: normal;
+}
+.fx-tab tr:last-child th,
+.fx-tab tr:last-child td { border-bottom: 0; }
+.fx-tab .fx-linha-forte th,
+.fx-tab .fx-linha-forte td { background: #F2F6FB; }
+.fx td.pos { color: #1E8A4C; }
+.fx td.neg { color: #D0402B; }
+.fx-tab-texto th { width: 180px; vertical-align: top; }
+.fx-tab-texto td {
+  text-align: left;
+  font-weight: 500;
+  white-space: normal;
+  color: #161B24;
+}
+.fx-vazio { color: #9AA1AB; font-weight: 400; }
+
+/* Gráfico */
+.fx-grafico {
+  position: relative;
+  flex: 1 1 auto;
+  height: 318px;
+  padding: 8px 12px 6px;
+}
+
+/* Faixa de números do resumo de campo */
+.fx-faixa {
+  width: calc(100% - 48px);
+  margin: 16px 24px 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #fff;
+  border: 1px solid var(--tc-border-color, #D8DCE2);
+}
+.fx-faixa th {
+  padding: 12px 18px 0;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #67707C;
+}
+.fx-faixa td {
+  padding: 4px 18px 14px;
+  vertical-align: top;
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.fx-faixa th + th,
+.fx-faixa td + td { border-left: 1px solid #EDEFF2; }
+.fx-faixa td small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #67707C;
+}
+
+/* Plano do dia */
+.fx-plano {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 16px;
+  margin: 16px 24px 0;
+  padding: 14px 18px;
+  font-size: 15px;
+  background: #fff;
+  border: 1px solid var(--tc-border-color, #D8DCE2);
+  border-left: 4px solid var(--tc-accent, #1F6FB2);
+}
+.fx-plano b {
+  padding-top: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Fotos da vistoria (só quando anexadas) */
+.fx-fotos { margin: 16px 24px 0; }
+.fx-fotos-grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px 14px;
+}
+.fx-fotos-grade img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.fx-rodape {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 14px 24px 0;
+  font-size: 11px;
+  color: #67707C;
+}
+
+/* Celular e tela estreita: uma coluna, o card primeiro e a edição embaixo;
+   os botões do topo quebram linha dentro da barra em vez de vazar. */
+@media (max-width: 900px) {
+  html body .team-card-page,
+  html body .all-team-card-page {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+    grid-auto-rows: auto !important;
+    align-content: start;
+  }
+  html body .tc-page-header {
+    height: auto !important;
+    min-height: 56px;
+    flex-wrap: wrap !important;
+    row-gap: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  html body .tc-head-actions { flex-wrap: wrap; justify-content: flex-end; }
+  html body .tc-main,
+  html body .atc-main { order: 1; overflow: visible !important; }
+  html body .tc-sidebar,
+  html body .atc-sidebar {
+    order: 2;
+    position: static !important;
+    max-height: none !important;
+  }
+}

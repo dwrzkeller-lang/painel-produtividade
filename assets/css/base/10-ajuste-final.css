@@ -1,0 +1,156 @@
+    :root {
+      --smooth: cubic-bezier(.22, .61, .36, 1)
+    }
+
+    button,
+    .btn,
+    .login-submit,
+    .project-tile,
+    .pill,
+    .exec-check-chip,
+    .kpi,
+    .panel,
+    .card,
+    .modal {
+      transition: transform .18s var(--smooth), box-shadow .18s var(--smooth), border-color .18s var(--smooth), background-color .18s var(--smooth), opacity .18s var(--smooth) !important;
+    }
+
+    button:hover,
+    .btn:hover,
+    .login-submit:hover,
+    .project-tile:hover,
+    .pill:hover {
+      transform: translateY(-1px) !important;
+    }
+
+    .login-hero p {
+      max-width: 760px !important;
+      color: #E7F0F9 !important;
+      font-size: 15px !important;
+      line-height: 1.45 !important;
+      font-weight: 850 !important;
+    }
+
+    .login-note {
+      background: #F7F8FA !important;
+      border: 1px solid #E3E6EA !important;
+      border-radius: 14px !important;
+      padding: 12px 13px !important;
+      color: #3F4752 !important;
+      font-size: 12px !important;
+      line-height: 1.35 !important;
+    }
+
+    .login-note b {
+      color: #082E43 !important;
+    }
+
+    #currentProjectPill {
+      font-size: 11px !important;
+    }
+
+    .exec-shell-title {
+      letter-spacing: .045em !important;
+    }
+
+    .kpis {
+      grid-template-columns: repeat(6, minmax(170px, 1fr)) !important;
+      gap: 8px !important;
+    }
+
+    .kpi {
+      overflow: visible !important;
+      min-width: 0 !important;
+    }
+
+    .kpi .value {
+      font-size: clamp(15.5px, 1.02vw, 19px) !important;
+      white-space: nowrap !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+      letter-spacing: -.02em !important;
+      font-variant-numeric: tabular-nums !important;
+    }
+
+    .kpi .label {
+      font-size: 9.3px !important;
+    }
+
+    .kpi .sub {
+      font-size: 8.2px !important;
+      gap: 5px !important;
+    }
+
+    .table tfoot td {
+      font-size: 12.6px !important;
+      white-space: nowrap !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+    }
+
+    .table tfoot td:first-child {
+      white-space: normal !important;
+    }
+
+    .modal {
+      width: min(1500px, 98vw) !important;
+      max-height: 94vh !important;
+      border-radius: 18px !important;
+    }
+
+    .modal-body {
+      grid-template-columns: minmax(300px, 340px) minmax(0, 1fr) !important;
+      gap: 12px !important;
+      padding: 12px !important;
+    }
+
+    .edit-wrap {
+      max-height: calc(94vh - 128px) !important;
+      overflow: auto !important;
+    }
+
+    .edit-table th,
+    .edit-table td {
+      font-size: 10.6px !important;
+      padding: 5px !important;
+    }
+
+    .edit-table input {
+      font-size: 11px !important;
+      padding: 6px !important;
+    }
+
+    .editor-card {
+      padding: 10px !important;
+      border-radius: 13px !important;
+    }
+
+    .editor-card h3 {
+      font-size: 11.5px !important;
+      margin-bottom: 7px !important;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      font-size: 11.5px !important;
+      padding: 7px 8px !important;
+    }
+
+    @media(max-width:1300px) {
+      .kpis {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important
+      }
+
+      .modal-body {
+        grid-template-columns: 1fr !important
+      }
+
+      .edit-wrap {
+        max-height: none !important
+      }
+
+      .right {
+        grid-template-columns: 1fr !important
+      }
+    }
